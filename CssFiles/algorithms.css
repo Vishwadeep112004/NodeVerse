@@ -1,0 +1,161 @@
+:root{
+    --bg:#020617;
+    --card:#0f172a;
+    --border:#1e293b;
+    --accent:#00ff88;
+    --text:#e2e8f0;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Courier New",monospace;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:auto;
+    
+}
+
+/* Background Grid */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,255,136,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.05) 1px, transparent 1px);
+    background-size:40px 40px;
+    animation:moveGrid 25s linear infinite;
+    z-index:-1;
+}
+
+@keyframes moveGrid{
+    from{background-position:0 0;}
+    to{background-position:40px 40px;}
+}
+
+/* NAV */
+/* NAV BASE */
+nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    border-bottom:1px solid var(--border);
+    position:relative;
+}
+
+nav h2{
+    color:var(--accent);
+    text-shadow:0 0 10px var(--accent);
+}
+
+/* Nav Links */
+nav ul{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:var(--accent);
+}
+
+/* Hamburger */
+.menu-toggle{
+    display:none;
+    font-size:26px;
+    cursor:pointer;
+    color:var(--accent);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav ul{
+        position:absolute;
+        top:70px;
+        right:8%;
+        flex-direction:column;
+        background:var(--card);
+        border:1px solid var(--border);
+        padding:20px;
+        gap:20px;
+        display:none;
+    }
+
+    nav ul.active{
+        display:flex;
+    }
+}
+/* PIPELINE LAYOUT */
+.pipeline{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:60px;
+    padding:80px 5%;
+    flex-wrap:wrap;   /* Important */
+}
+
+
+/* GROUP BOX */
+.group{
+    background:var(--card);
+    border:2px solid var(--border);
+    border-radius:20px;
+    padding:40px 30px;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+    min-width:260px;
+    transition:0.3s;
+}
+
+.group:hover{
+    border-color:var(--accent);
+    box-shadow:0 0 25px var(--accent);
+}
+
+/* INNER NODE */
+.node{
+    background:#0b1220;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 15px;
+    text-align:center;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.node:hover{
+    border-color:var(--accent);
+    box-shadow:0 0 15px var(--accent);
+    transform:scale(1.05);
+}
+
+/* ARROW BETWEEN GROUPS */
+.arrow{
+    font-size:40px;
+    color:var(--accent);
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{opacity:0.6;}
+    50%{opacity:1;}
+}
