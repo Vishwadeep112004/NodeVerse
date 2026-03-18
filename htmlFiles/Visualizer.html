@@ -1,98 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>NodeVerse - Graph Visualizer</title>
-<link rel="stylesheet" href="../CssFiles/visualizer.css">
+    <meta charset="UTF-8">
+    <title>NodeVerse - Graph Visualizer</title>
+    <link rel="stylesheet" href="../CssFiles/visualizer.css">
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- LEFT PANEL -->
-    <div class="left-panel">
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
 
-        <h2>Graph Visualizer</h2>
+            <h2>Graph Visualizer</h2>
 
-        <div class="controls">
-            <input id="n" type="number" placeholder="Number of Nodes">
-            <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
-            <input id="weights" type="text" placeholder="Weights (optional)">
-            <button onclick="showGraph()">Show Graph</button>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes">
+                <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
+                <input id="weights" type="text" placeholder="Weights (optional)">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+            </div>
+
+            <div class="info">
+
+                <h3>What is a Graph?</h3>
+                <p>
+                    A graph is a non-linear data structure consisting of a set of
+                    vertices (nodes) and edges that connect pairs of vertices.
+                    Graphs are used to model relationships between objects.
+                </p>
+
+                <h3>Basic Terminology</h3>
+                <ul>
+                    <li><strong>Vertex (Node):</strong> Fundamental unit of a graph.</li>
+                    <li><strong>Edge:</strong> Connection between two vertices.</li>
+                    <li><strong>Weighted Graph:</strong> Edges have weights (cost/distance).</li>
+                    <li><strong>Unweighted Graph:</strong> All edges have equal weight.</li>
+                    <li><strong>Directed Graph (Digraph):</strong> Edges have direction.</li>
+                    <li><strong>Undirected Graph:</strong> Edges have no direction.</li>
+                    <li><strong>Degree:</strong> Number of edges connected to a vertex.</li>
+                    <li><strong>Path:</strong> Sequence of vertices connected by edges.</li>
+                    <li><strong>Cycle:</strong> A path that starts and ends at same vertex.</li>
+                </ul>
+
+                <h3>Types of Graphs</h3>
+                <ul>
+                    <li>Directed & Undirected Graphs</li>
+                    <li>Weighted & Unweighted Graphs</li>
+                    <li>Connected & Disconnected Graphs</li>
+                    <li>Cyclic & Acyclic Graphs (DAG)</li>
+                    <li>Complete Graph</li>
+                    <li>Tree (Special type of graph)</li>
+                </ul>
+
+                <h3>Graph Representations</h3>
+                <ul>
+                    <li><strong>Adjacency Matrix:</strong> 2D matrix representation.</li>
+                    <li><strong>Adjacency List:</strong> List of neighbors for each node.</li>
+                    <li><strong>Edge List:</strong> List of all edges.</li>
+                </ul>
+
+                <h3>Applications of Graphs</h3>
+                <ul>
+                    <li>🌐 Social Networks (Friends, Followers)</li>
+                    <li>🗺 GPS & Shortest Path (Google Maps)</li>
+                    <li>📡 Network Routing & Internet</li>
+                    <li>📦 Dependency Resolution (Package Managers)</li>
+                    <li>🕸 Web Crawling & Search Engines</li>
+                    <li>🧠 AI & Recommendation Systems</li>
+                    <li>🔌 Electrical Circuits</li>
+                    <li>🧬 Biological Networks</li>
+                </ul>
+
+                <h3>Why Graph Algorithms Matter?</h3>
+                <p>
+                    Graph algorithms help solve real-world problems like finding shortest paths,
+                    detecting cycles, building minimum cost networks, analyzing connectivity,
+                    and optimizing routes.
+                </p>
+
+            </div>
+
         </div>
 
-        <div class="info">
-
-    <h3>What is a Graph?</h3>
-    <p>
-        A graph is a non-linear data structure consisting of a set of 
-        vertices (nodes) and edges that connect pairs of vertices.
-        Graphs are used to model relationships between objects.
-    </p>
-
-    <h3>Basic Terminology</h3>
-    <ul>
-        <li><strong>Vertex (Node):</strong> Fundamental unit of a graph.</li>
-        <li><strong>Edge:</strong> Connection between two vertices.</li>
-        <li><strong>Weighted Graph:</strong> Edges have weights (cost/distance).</li>
-        <li><strong>Unweighted Graph:</strong> All edges have equal weight.</li>
-        <li><strong>Directed Graph (Digraph):</strong> Edges have direction.</li>
-        <li><strong>Undirected Graph:</strong> Edges have no direction.</li>
-        <li><strong>Degree:</strong> Number of edges connected to a vertex.</li>
-        <li><strong>Path:</strong> Sequence of vertices connected by edges.</li>
-        <li><strong>Cycle:</strong> A path that starts and ends at same vertex.</li>
-    </ul>
-
-    <h3>Types of Graphs</h3>
-    <ul>
-        <li>Directed & Undirected Graphs</li>
-        <li>Weighted & Unweighted Graphs</li>
-        <li>Connected & Disconnected Graphs</li>
-        <li>Cyclic & Acyclic Graphs (DAG)</li>
-        <li>Complete Graph</li>
-        <li>Tree (Special type of graph)</li>
-    </ul>
-
-    <h3>Graph Representations</h3>
-    <ul>
-        <li><strong>Adjacency Matrix:</strong> 2D matrix representation.</li>
-        <li><strong>Adjacency List:</strong> List of neighbors for each node.</li>
-        <li><strong>Edge List:</strong> List of all edges.</li>
-    </ul>
-
-    <h3>Applications of Graphs</h3>
-    <ul>
-        <li>🌐 Social Networks (Friends, Followers)</li>
-        <li>🗺 GPS & Shortest Path (Google Maps)</li>
-        <li>📡 Network Routing & Internet</li>
-        <li>📦 Dependency Resolution (Package Managers)</li>
-        <li>🕸 Web Crawling & Search Engines</li>
-        <li>🧠 AI & Recommendation Systems</li>
-        <li>🔌 Electrical Circuits</li>
-        <li>🧬 Biological Networks</li>
-    </ul>
-
-    <h3>Why Graph Algorithms Matter?</h3>
-    <p>
-        Graph algorithms help solve real-world problems like finding shortest paths,
-        detecting cycles, building minimum cost networks, analyzing connectivity,
-        and optimizing routes.
-    </p>
-
-</div>
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
 
     </div>
 
-    <!-- RIGHT PANEL -->
-    <div class="right-panel">
-        <canvas id="world"></canvas>
-    </div>
-
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-<script src="../JsFiles/visualizer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
 
 </body>
+
 </html>

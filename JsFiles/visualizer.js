@@ -3,6 +3,8 @@ const {
     Bodies, Mouse, MouseConstraint, Events
 } = Matter;
 
+/* ================= ENGINE SETUP ================= */
+
 const engine = Engine.create();
 engine.world.gravity.y = 0;
 
@@ -20,72 +22,124 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-/* ============ GLOBAL STATE ============ */
+/* ================= GLOBAL STATE ================= */
+
 let nodeBodies = [];
 let edgeList = [];
 let adj = [];
-let steps = [];
 let graphCreated = false;
+let isDirected = false;
 
-const order = document.getElementById("order");
+const n = document.getElementById("n");
+const edges = document.getElementById("edges");
+const weights = document.getElementById("weights");
 
-/* ============ DRAW EDGES + LABELS ============ */
+/* ================= TOGGLE TYPE ================= */
+
+function setType(val) {
+    isDirected = val;
+
+    document.getElementById("directedBtn")
+        ?.classList.toggle("active", val);
+
+    document.getElementById("undirectedBtn")
+        ?.classList.toggle("active", !val);
+}
+
+/* ================= DRAW EDGES + LABELS ================= */
+
 Events.on(render, "afterRender", () => {
     const ctx = render.context;
 
-    // THREAD EDGES
-    edgeList.forEach(e => {
-        const A = nodeBodies[e.u].position;
-        const B = nodeBodies[e.v].position;
+edgeList.forEach(e => {
 
-        if (e.active) {
-            ctx.shadowColor = "#facc15";
-            ctx.shadowBlur = 25;
-            ctx.strokeStyle = "#facc15";
-            ctx.lineWidth = 4;
-        } else {
-            ctx.shadowBlur = 0;
-            ctx.strokeStyle = "#475569";
-            ctx.lineWidth = 2;
-        }
+    const A = nodeBodies[e.u].position;
+    const B = nodeBodies[e.v].position;
+
+    const radius = 22;
+
+    const dx = B.x - A.x;
+    const dy = B.y - A.y;
+    const len = Math.sqrt(dx * dx + dy * dy);
+
+    if (len === 0) return;
+
+    const unitX = dx / len;
+    const unitY = dy / len;
+
+    const startX = A.x + unitX * radius;
+    const startY = A.y + unitY * radius;
+
+    const endX = B.x - unitX * radius;
+    const endY = B.y - unitY * radius;
+
+    ctx.strokeStyle = e.active ? "#facc15" : "#475569";
+    ctx.lineWidth = e.active ? 4 : 2;
+
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(endX, endY);
+    ctx.stroke();
+
+    /* ===== Arrow for Directed ===== */
+    if (e.directed) {
+        const angle = Math.atan2(dy, dx);
+        const arrowLen = 14;
 
         ctx.beginPath();
-        ctx.moveTo(A.x, A.y);
-        ctx.lineTo(B.x, B.y);
-        ctx.stroke();
-    });
+        ctx.moveTo(endX, endY);
+        ctx.lineTo(
+            endX - arrowLen * Math.cos(angle - Math.PI / 6),
+            endY - arrowLen * Math.sin(angle - Math.PI / 6)
+        );
+        ctx.lineTo(
+            endX - arrowLen * Math.cos(angle + Math.PI / 6),
+            endY - arrowLen * Math.sin(angle + Math.PI / 6)
+        );
+        ctx.closePath();
+        ctx.fillStyle = e.active ? "#facc15" : "#475569";
+        ctx.fill();
+    }
 
-    // NODE LABELS
-    ctx.fillStyle = "#e5e7eb";
-    ctx.font = "16px Segoe UI";
+    /* ===== Draw Weight (Offset from Line) ===== */
+    if (e.weight !== null) {
+
+        const midX = (startX + endX) / 2;
+        const midY = (startY + endY) / 2;
+
+        // Perpendicular offset
+        const offset = 18;
+        const perpX = -unitY * offset;
+        const perpY = unitX * offset;
+
+        ctx.fillStyle = "#facc15";
+        ctx.font = "bold 14px Segoe UI";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText(
+            e.weight,
+            midX + perpX,
+            midY + perpY
+        );
+    }
+
+});
+
+    /* ===== Node Labels ===== */
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     nodeBodies.forEach((b, i) => {
-
-        if (b.render.fillStyle === "#22c55e") {
-            ctx.fillStyle = "#22ff88";
-            ctx.shadowColor = "#22ff88";
-            ctx.shadowBlur = 20;
-        }
-        else if (b.render.fillStyle === "#facc15") {
-            ctx.fillStyle = "#facc15";
-            ctx.shadowColor = "#facc15";
-            ctx.shadowBlur = 20;
-        }
-        else {
-            ctx.fillStyle = "#e5e7eb";
-            ctx.shadowBlur = 0;
-        }
-
+        ctx.fillStyle = "#e5e7eb";
         ctx.font = "bold 16px Segoe UI";
         ctx.fillText(i, b.position.x, b.position.y);
     });
-    ctx.shadowBlur = 0;
-
 });
 
-/* ============ BOUNDARIES ============ */
+/* ================= BOUNDARIES ================= */
+
 function addBoundaries() {
     const w = render.options.width;
     const h = render.options.height;
@@ -99,22 +153,29 @@ function addBoundaries() {
     ]);
 }
 
-/* ============ CREATE GRAPH ============ */
-function createGraph(n, edgeStr) {
+/* ================= CREATE GRAPH ================= */
+
+function createGraph(nNodes, edgeStr, weightStr = "") {
+
     World.clear(engine.world, false);
+
     nodeBodies = [];
     edgeList = [];
-    adj = Array.from({ length: n }, () => []);
-    steps = [];
+    adj = Array.from({ length: nNodes }, () => []);
 
     addBoundaries();
 
-    const cx = 450, cy = 250, r = 180;
+    const cx = 450;
+    const cy = 250;
+    const r = 180;
 
-    for (let i = 0; i < n; i++) {
-        let a = 2 * Math.PI * i / n;
-        let x = cx + r * Math.cos(a);
-        let y = cy + r * Math.sin(a);
+    /* ===== Create Nodes ===== */
+
+    for (let i = 0; i < nNodes; i++) {
+
+        let angle = 2 * Math.PI * i / nNodes;
+        let x = cx + r * Math.cos(angle);
+        let y = cy + r * Math.sin(angle);
 
         const body = Bodies.circle(x, y, 22, {
             collisionFilter: { group: -1 },
@@ -131,14 +192,37 @@ function createGraph(n, edgeStr) {
         World.add(engine.world, body);
     }
 
-    edgeStr.split(",").forEach(e => {
+    /* ===== Parse Weights ===== */
+
+    const weightArr = weightStr
+        ? weightStr.split(",").map(Number)
+        : [];
+
+    /* ===== Parse Edges ===== */
+
+    edgeStr.split(",").forEach((e, index) => {
+
         let [u, v] = e.trim().split("-").map(Number);
         if (isNaN(u) || isNaN(v)) return;
 
-        adj[u].push(v);
-        adj[v].push(u);
-        edgeList.push({ u, v, active: false });
+        const w = weightArr[index] ?? null;
+
+        adj[u].push({ node: v, weight: w });
+
+        if (!isDirected) {
+            adj[v].push({ node: u, weight: w });
+        }
+
+        edgeList.push({
+            u,
+            v,
+            weight: w,
+            active: false,
+            directed: isDirected
+        });
     });
+
+    /* ===== Enable Drag ===== */
 
     const mouse = Mouse.create(render.canvas);
     World.add(engine.world,
@@ -147,36 +231,12 @@ function createGraph(n, edgeStr) {
             constraint: { stiffness: 0.2 }
         })
     );
-}
 
-/* ============ BFS LOGIC ============ */
-
-
-/* ============ BFS ANIMATION ============ */
-
-
-
-
-function typeNode(val) {
-    let span = document.createElement("span");
-    span.textContent = " " + val;
-    span.style.opacity = 0;
-    span.style.transform = "scale(0.5)";
-    span.style.transition = "0.4s ease";
-    order.appendChild(span);
-
-    setTimeout(() => {
-        span.style.opacity = 1;
-        span.style.transform = "scale(1)";
-    }, 50);
-}
-
-/* ============ BUTTONS ============ */
-function showGraph() {
-    createGraph(+n.value, edges.value);
     graphCreated = true;
 }
 
-const n = document.getElementById("n");
-const edges = document.getElementById("edges");
-const start = document.getElementById("start");
+/* ================= BUTTON ================= */
+
+function showGraph() {
+    createGraph(+n.value, edges.value, weights.value);
+}
