@@ -8,3 +8,7 @@ toggle.addEventListener("click",()=>{
 function goToBFSVisualizer(){
     window.location.href="./bfs.html"
 }
+
+function goToDFSVisualizer(){
+    window.location.href="./dfs.html"
+}
