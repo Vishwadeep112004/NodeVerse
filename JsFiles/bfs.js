@@ -1,10 +1,10 @@
-function showCode(lang){
+function showCode(lang) {
 
     const codeArea = document.getElementById("codeArea");
 
     let code = "";
 
-    if(lang === "cpp"){
+    if (lang === "cpp") {
         code = `
 #include <bits/stdc++.h>
 using namespace std;
@@ -33,7 +33,7 @@ void bfs(int start, vector<vector<int>>& adj){
 `;
     }
 
-    else if(lang === "java"){
+    else if (lang === "java") {
         code = `
 import java.util.*;
 
@@ -61,7 +61,7 @@ class BFS {
 `;
     }
 
-    else if(lang === "python"){
+    else if (lang === "python") {
         code = `
 from collections import deque
 
@@ -89,47 +89,118 @@ def bfs(start, adj):
 let nodes, ed;
 console.log("BFS JS Loaded");
 
-let steps=[];
+let steps = [];
 
-function run(adjList)
+function run(adjList, start)
 {
     const visited = Array(nodes).fill(false);
-    const queue = [];
 
-    visited[0] = true;
-    queue.push(0);
-
-    while(queue.length > 0)
+    function bfs(s)
     {
-        const u = queue.shift();
-        steps.push({u:"visited"});
+        const queue = [];
 
-        for(const v of adjList[u])
+        visited[s] = true;
+        queue.push(s);
+
+        steps.push({t:"active", u:s});
+
+        while(queue.length > 0)
         {
-            if(!visited[v])
+            const u = queue.shift();
+
+            steps.push({t:"visit", u});
+
+            for(const v of adjList[u])
             {
-                steps.push({v:"edge visited"})
-                visited[v] = true;
-                queue.push(v);
+                if(!visited[v])
+                {
+                    visited[v] = true;
+                    queue.push(v);
+
+                    steps.push({t:"edge", u, v});
+                    steps.push({t:"active", u:v});
+                }
             }
         }
+    }
+
+    // 🔹 First BFS from given start
+    bfs(start);
+
+    // 🔹 Then handle disconnected components
+    for(let i = 0; i < nodes; i++)
+    {
+        if(!visited[i])
+        {
+            bfs(i);
+        }
+    }
+}
+
+function play() {
+    let i = 0;
+    const delay = 600;
+
+    function next() {
+        if (i >= steps.length) return;
+
+        applyStep(steps[i++]);
+        setTimeout(next, delay);
+    }
+
+    next();
+}
+
+function applyStep(s) {
+
+    if (s.t === "active") {
+        nodeBodies[s.u].render.fillStyle = "#facc15"; // yellow
+    }
+
+    if (s.t === "visit") {
+        nodeBodies[s.u].render.fillStyle = "#22c55e"; // green
+    }
+
+    if (s.t === "edge") {
+        edgeList.forEach(e => {
+            if (
+                (e.u === s.u && e.v === s.v) ||
+                (e.u === s.v && e.v === s.u)
+            ) {
+                e.active = true;
+            }
+        });
     }
 }
 
 function runBFS()
 {
-    nodes=Number(document.getElementById("n").value);
-    ed=document.getElementById("edges").value.split(",").map(edge => edge.trim().split("-").map(Number));
+    nodes = Number(document.getElementById("n").value);
+
+    const start = Number(document.getElementById("start").value);
+
+    if(isNaN(start) || start < 0 || start >= nodes){
+        alert("Invalid start node");
+        return;
+    }
+
+    ed = document.getElementById("edges")
+        .value.split(",")
+        .map(edge => edge.trim().split("-").map(Number));
+
     adjList = Array.from({length: nodes}, () => []);
     
     ed.forEach(edge => {
         const [u, v] = edge;
         adjList[u].push(v);
+
         if(!document.getElementById("directedBtn").classList.contains("active")){
             adjList[v].push(u);
         }
     });
 
-    run(adjList);
-}
+    steps = [];
 
+    run(adjList, start);   // 👈 pass start
+    play();
+}

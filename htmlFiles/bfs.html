@@ -20,6 +20,7 @@
                 <input id="n" type="number" placeholder="Number of Nodes">
                 <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
                 <input id="weights" type="text" placeholder="Weights (optional)">
+                <input id="start" type="number" placeholder="Start Node" value="0">
                 <div class="graph-type">
                     <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
                     <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
@@ -89,7 +90,6 @@
             <div class="areaForCode" id="codeArea"></div>
 
         </div>
-    </div>
 
 
     <!-- RIGHT PANEL -->
