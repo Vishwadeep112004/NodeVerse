@@ -173,6 +173,19 @@ function applyStep(s) {
     }
 }
 
+function resetGraph()
+{
+    // Reset node colors
+    nodeBodies.forEach(node => {
+        node.render.fillStyle = "#020617"; // original color
+    });
+
+    // Reset edges
+    edgeList.forEach(edge => {
+        edge.active = false;
+    });
+}
+
 function runBFS()
 {
     nodes = Number(document.getElementById("n").value);
@@ -183,6 +196,7 @@ function runBFS()
         alert("Invalid start node");
         return;
     }
+    resetGraph();
 
     ed = document.getElementById("edges")
         .value.split(",")
@@ -201,6 +215,6 @@ function runBFS()
 
     steps = [];
 
-    run(adjList, start);   // 👈 pass start
+    run(adjList, start);
     play();
 }
