@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>NodeVerse - Graph Visualizer</title>
-    <link rel="stylesheet" href="../CssFiles/dfs.css">
+    <link rel="stylesheet" href="../CssFiles/connected_components.css">
 </head>
 
 <body>
 
     <div class="container">
 
+        <!-- LEFT PANEL -->
         <div class="left-panel">
 
-            <h2>Depth First Search Visualizer</h2>
+            <h2>Connected Components Visualizer</h2>
 
             <div class="controls">
                 <input id="n" type="number" placeholder="Number of Nodes">
@@ -25,32 +26,33 @@
                     <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
                 </div>
                 <button onclick="showGraph()">Show Graph</button>
-                <button onclick="runDFS()">Run DFS</button>
+                <button onclick="runBFS()">Run BFS</button>
             </div>
             <div class="info">
 
-                <h3>What is Depth First Search (DFS)?</h3>
+                <h3>What is Breadth First Search (BFS)?</h3>
                 <p>
-                    Depth First Search (DFS) is a graph traversal algorithm that explores
-                    as far as possible along a branch before backtracking.
-                    It uses a Stack (LIFO) structure, either explicitly or via recursion.
+                    Breadth First Search (BFS) is a graph traversal algorithm that explores
+                    all neighbors of a node before moving to the next level of nodes.
+                    It uses a Queue (FIFO structure) to maintain the order of exploration.
                 </p>
 
-                <h3>How DFS Works</h3>
+                <h3>How BFS Works</h3>
                 <ul>
                     <li>Start from a source node.</li>
                     <li>Mark it as visited.</li>
-                    <li>Explore one of its unvisited neighbors.</li>
-                    <li>Repeat the process recursively for that neighbor.</li>
-                    <li>If no unvisited neighbors remain, backtrack.</li>
-                    <li>Continue until all nodes are visited.</li>
+                    <li>Insert it into a queue.</li>
+                    <li>While the queue is not empty:</li>
+                    <li>→ Remove a node from the queue.</li>
+                    <li>→ Visit all its unvisited neighbors.</li>
+                    <li>→ Mark them visited and push them into the queue.</li>
                 </ul>
 
-                <h3>Key Properties of DFS</h3>
+                <h3>Key Properties of BFS</h3>
                 <ul>
-                    <li>Uses Stack (or recursion).</li>
-                    <li>Goes deep before exploring breadth.</li>
-                    <li>Does NOT guarantee shortest path.</li>
+                    <li>Uses a Queue data structure.</li>
+                    <li>Traverses level by level.</li>
+                    <li>Finds shortest path in unweighted graphs.</li>
                     <li>Works on both directed and undirected graphs.</li>
                 </ul>
 
@@ -60,21 +62,22 @@
                     <li><strong>Space Complexity:</strong> O(V)</li>
                 </ul>
 
-                <h3>Applications of DFS</h3>
+                <h3>Applications of BFS</h3>
                 <ul>
-                    <li>Detecting cycles in graphs.</li>
-                    <li>Topological sorting (DAG).</li>
+                    <li>Finding shortest path in unweighted graphs.</li>
+                    <li>Level order traversal in trees.</li>
                     <li>Finding connected components.</li>
-                    <li>Solving puzzles (maze, backtracking).</li>
-                    <li>Strongly Connected Components (Kosaraju, Tarjan).</li>
-                    <li>Path finding in games and AI.</li>
+                    <li>Detecting bipartite graphs.</li>
+                    <li>Solving puzzles (like shortest moves problem).</li>
+                    <li>Web crawling & social network analysis.</li>
                 </ul>
 
-                <h3>Why DFS is Important?</h3>
+                <h3>Why BFS is Important?</h3>
                 <p>
-                    DFS is useful when exploring all possible paths or solutions,
-                    especially in problems involving recursion, backtracking,
-                    and graph structure analysis.
+                    BFS guarantees the shortest path in unweighted graphs because it
+                    explores nodes in increasing distance order from the source.
+                    This makes it extremely useful in routing, navigation systems,
+                    and networking problems.
                 </p>
 
             </div>
@@ -89,16 +92,16 @@
         </div>
 
 
-        <!-- RIGHT PANEL -->
-        <div class="right-panel">
-            <canvas id="world"></canvas>
-        </div>
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+        <canvas id="world"></canvas>
+    </div>
 
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-    <script src="../JsFiles/visualizer.js"></script>
-    <script src="../JsFiles/dfs.js"></script>
+    <script  src="../JsFiles/visualizer.js"></script>
+    <script  src="../JsFiles/connected_components.js"></script>
 
 </body>
 
