@@ -89,11 +89,12 @@ def bfs(start, adj):
 let nodes, ed;
 console.log("BFS JS Loaded");
 
-let steps = [];
+let parent = [];
 
 function run(adjList, start)
 {
     const visited = Array(nodes).fill(false);
+    parent = Array(nodes).fill(-1); // 🔹 NEW
 
     function bfs(s)
     {
@@ -117,6 +118,8 @@ function run(adjList, start)
                     visited[v] = true;
                     queue.push(v);
 
+                    parent[v] = u; // 🔹 STORE PATH
+
                     steps.push({t:"edge", u, v});
                     steps.push({t:"active", u:v});
                 }
@@ -124,10 +127,8 @@ function run(adjList, start)
         }
     }
 
-    // 🔹 First BFS from given start
     bfs(start);
 
-    // 🔹 Then handle disconnected components
     for(let i = 0; i < nodes; i++)
     {
         if(!visited[i])
@@ -217,4 +218,37 @@ function runBFS()
 
     run(adjList, start);
     play();
+}
+
+function showPath()
+{
+    const start = Number(document.getElementById("start").value);
+
+    let output = "";
+
+    for(let i = 0; i < nodes; i++)
+    {
+        if(i === start){
+            output += `${i}: ${i}\n`;
+            continue;
+        }
+
+        let path = [];
+        let curr = i;
+
+        while(curr !== -1){
+            path.push(curr);
+            curr = parent[curr];
+        }
+
+        path.reverse();
+
+        if(path[0] !== start){
+            output += `${i}: No path\n`;
+        } else {
+            output += `${i}: ${path.join(" → ")}\n`;
+        }
+    }
+
+    document.getElementById("codeArea").textContent = output;
 }

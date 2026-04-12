@@ -3,106 +3,84 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>NodeVerse - Graph Visualizer</title>
+    <title>NodeVerse - Connected Components</title>
     <link rel="stylesheet" href="../CssFiles/connected_components.css">
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- LEFT PANEL -->
-        <div class="left-panel">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
 
-            <h2>Connected Components Visualizer</h2>
+        <h2>Connected Components Visualizer</h2>
 
-            <div class="controls">
-                <input id="n" type="number" placeholder="Number of Nodes">
-                <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
-                <input id="weights" type="text" placeholder="Weights (optional)">
-                <input id="start" type="number" placeholder="Start Node" value="0">
-                <div class="graph-type">
-                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
-                    <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
-                </div>
-                <button onclick="showGraph()">Show Graph</button>
-                <button onclick="runBFS()">Run BFS</button>
-            </div>
-            <div class="info">
-
-                <h3>What is Breadth First Search (BFS)?</h3>
-                <p>
-                    Breadth First Search (BFS) is a graph traversal algorithm that explores
-                    all neighbors of a node before moving to the next level of nodes.
-                    It uses a Queue (FIFO structure) to maintain the order of exploration.
-                </p>
-
-                <h3>How BFS Works</h3>
-                <ul>
-                    <li>Start from a source node.</li>
-                    <li>Mark it as visited.</li>
-                    <li>Insert it into a queue.</li>
-                    <li>While the queue is not empty:</li>
-                    <li>→ Remove a node from the queue.</li>
-                    <li>→ Visit all its unvisited neighbors.</li>
-                    <li>→ Mark them visited and push them into the queue.</li>
-                </ul>
-
-                <h3>Key Properties of BFS</h3>
-                <ul>
-                    <li>Uses a Queue data structure.</li>
-                    <li>Traverses level by level.</li>
-                    <li>Finds shortest path in unweighted graphs.</li>
-                    <li>Works on both directed and undirected graphs.</li>
-                </ul>
-
-                <h3>Time & Space Complexity</h3>
-                <ul>
-                    <li><strong>Time Complexity:</strong> O(V + E)</li>
-                    <li><strong>Space Complexity:</strong> O(V)</li>
-                </ul>
-
-                <h3>Applications of BFS</h3>
-                <ul>
-                    <li>Finding shortest path in unweighted graphs.</li>
-                    <li>Level order traversal in trees.</li>
-                    <li>Finding connected components.</li>
-                    <li>Detecting bipartite graphs.</li>
-                    <li>Solving puzzles (like shortest moves problem).</li>
-                    <li>Web crawling & social network analysis.</li>
-                </ul>
-
-                <h3>Why BFS is Important?</h3>
-                <p>
-                    BFS guarantees the shortest path in unweighted graphs because it
-                    explores nodes in increasing distance order from the source.
-                    This makes it extremely useful in routing, navigation systems,
-                    and networking problems.
-                </p>
-
-            </div>
-            <div class="buttons">
-                <button onclick="showCode('cpp')">C++</button>
-                <button onclick="showCode('java')">Java</button>
-                <button onclick="showCode('python')">Python</button>
+        <div class="controls">
+            <input id="n" type="number" placeholder="Number of Nodes">
+            <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
+            <input id="weights" type="text" placeholder="Weights (optional)">
+            
+            <div class="graph-type">
+                <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
             </div>
 
-            <div class="areaForCode" id="codeArea"></div>
+            <button onclick="showGraph()">Show Graph</button>
+            <button onclick="runConnectedComponents()">Show Connected Components</button>
+        </div>
+
+        <!-- INFO -->
+        <div class="info">
+
+            <h3>What are Connected Components?</h3>
+            <p>
+                A connected component is a group of nodes in a graph where every node
+                is reachable from every other node in the same group.
+            </p>
+
+            <h3>How It Works</h3>
+            <ul>
+                <li>Start from an unvisited node.</li>
+                <li>Perform BFS/DFS traversal.</li>
+                <li>Mark all reachable nodes as part of one component.</li>
+                <li>Repeat for all unvisited nodes.</li>
+            </ul>
+
+            <h3>Key Properties</h3>
+            <ul>
+                <li>Each node belongs to exactly one component.</li>
+                <li>Useful for detecting isolated subgraphs.</li>
+                <li>Works best with undirected graphs.</li>
+            </ul>
+
+            <h3>Time Complexity</h3>
+            <ul>
+                <li><strong>O(V + E)</strong></li>
+            </ul>
+
+            <h3>Applications</h3>
+            <ul>
+                <li>Social network analysis</li>
+                <li>Network connectivity</li>
+                <li>Image segmentation</li>
+                <li>Clustering problems</li>
+            </ul>
 
         </div>
 
+    </div>
 
     <!-- RIGHT PANEL -->
     <div class="right-panel">
         <canvas id="world"></canvas>
     </div>
 
-    </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-    <script  src="../JsFiles/visualizer.js"></script>
-    <script  src="../JsFiles/connected_components.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script src="../JsFiles/visualizer.js"></script>
+<script src="../JsFiles/connected_components.js"></script>
 
 </body>
-
 </html>
