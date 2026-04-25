@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>NodeVerse - Graph Visualizer</title>
+    <link rel="stylesheet" href="../CssFiles/cycle_detection_directed.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="left-panel">
+
+            <h2>Cycle Detection (Directed)</h2>
+
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes">
+                <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
+                <input id="weights" type="text" placeholder="Weights (optional)">
+                <input id="start" type="number" placeholder="Start Node" value="0">
+                <div class="graph-type">
+                    <button id="DFS" class="type-btn active" onclick="setType(true); setMethod(false)">With DFS</button>
+                    <button id="BFS" class="type-btn" onclick="setType(false); setMethod(false)">With BFS</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runCycleDetection()">Run Cycle Detection</button>
+            </div>
+            <div class="info">
+
+                <h3>What is Cycle Detection in Graph?</h3>
+                <p>
+                    Cycle detection is the process of determining whether a graph contains
+                    a cycle — a path that starts and ends at the same node.
+                    In undirected graphs, cycles occur when we revisit a node
+                    that is not the direct parent during traversal.
+                </p>
+
+                <h3>How Cycle Detection Works (Using DFS)</h3>
+                <ul>
+                    <li>Start DFS from a node.</li>
+                    <li>Mark the current node as visited.</li>
+                    <li>For each neighbor:</li>
+                    <li>→ If not visited, recursively visit it.</li>
+                    <li>→ If visited and not the parent → cycle detected.</li>
+                    <li>Continue until all nodes are processed.</li>
+                </ul>
+
+                <h3>Key Idea</h3>
+                <ul>
+                    <li>In undirected graphs, every edge is bidirectional.</li>
+                    <li>So we must ignore the parent node while checking cycles.</li>
+                    <li>If a visited node is found that is NOT the parent → cycle exists.</li>
+                </ul>
+
+                <h3>Time & Space Complexity</h3>
+                <ul>
+                    <li><strong>Time Complexity:</strong> O(V + E)</li>
+                    <li><strong>Space Complexity:</strong> O(V)</li>
+                </ul>
+
+                <h3>Applications of Cycle Detection</h3>
+                <ul>
+                    <li>Detecting loops in networks.</li>
+                    <li>Checking if a graph is a tree (no cycles).</li>
+                    <li>Deadlock detection in operating systems.</li>
+                    <li>Validating structures in graphs.</li>
+                    <li>Game development and path analysis.</li>
+                </ul>
+
+                <h3>Why Cycle Detection is Important?</h3>
+                <p>
+                    Cycle detection helps identify infinite loops, invalid structures,
+                    and dependencies in graphs. It is essential in systems like
+                    networking, operating systems, and graph-based problem solving.
+                </p>
+
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+
+            <div class="areaForCode" id="codeArea"></div>
+
+        </div>
+
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/cycle_detection_directed.js"></script>
+
+</body>
+
+</html>

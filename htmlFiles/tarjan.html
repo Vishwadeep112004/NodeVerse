@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Tarjan's SCC Algorithm</title>
+    <meta name="description" content="Visualize Strongly Connected Components using Tarjan's single-pass DFS algorithm.">
+    <link rel="stylesheet" href="../CssFiles/tarjan.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Tarjan's Algorithm — SCC</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Directed Edges (0-1, 1-2, 2-0)">
+                <input id="weights" type="text" placeholder="Weights (not needed)">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn" onclick="setType(false)" disabled>Undirected</button>
+                    <button id="directedBtn" class="type-btn active" onclick="setType(true)">Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runTarjan()">Run Tarjan's</button>
+            </div>
+            <div class="info">
+                <h3>What is Tarjan's Algorithm?</h3>
+                <p>Tarjan's finds all Strongly Connected Components (SCCs) in a directed graph
+                   using a single DFS pass with O(V+E) complexity — more efficient than Kosaraju's
+                   two-pass approach.</p>
+
+                <h3>How it Works</h3>
+                <ul>
+                    <li>Assign each node a discovery time <strong>disc[]</strong>.</li>
+                    <li>Track lowest reachable disc via <strong>low[]</strong>.</li>
+                    <li>Maintain a stack of nodes currently in DFS path.</li>
+                    <li>When low[u] == disc[u] → u is the root of an SCC.</li>
+                    <li>Pop all nodes from stack until u → they form one SCC.</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🟡 Yellow — DFS active (being explored)</li>
+                    <li>🟢 Green  — visited, on DFS stack</li>
+                    <li>🔴 Red edge — back edge (part of cycle)</li>
+                    <li>🎨 Final color per node = SCC group</li>
+                </ul>
+
+                <h3>Tarjan's vs Kosaraju's</h3>
+                <ul>
+                    <li>Tarjan's: single DFS pass, one graph.</li>
+                    <li>Kosaraju's: two DFS passes, needs reversed graph.</li>
+                    <li>Both are O(V + E).</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V + E)</li>
+                    <li><strong>Space:</strong> O(V)</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/tarjan.js"></script>
+    <script>
+        window.addEventListener("DOMContentLoaded", () => setType(true));
+    </script>
+</body>
+</html>

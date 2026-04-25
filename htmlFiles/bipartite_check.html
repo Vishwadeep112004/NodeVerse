@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Bipartite Graph Check</title>
+    <meta name="description" content="Check if a graph is bipartite using BFS 2-coloring visualization.">
+    <link rel="stylesheet" href="../CssFiles/bipartite_check.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Bipartite Graph Check</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Edges (0-1, 1-2, 2-3)">
+                <input id="weights" type="text" placeholder="Weights (not needed)">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)" disabled>Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runBipartite()">Check Bipartite</button>
+            </div>
+            <div class="info">
+                <h3>What is a Bipartite Graph?</h3>
+                <p>A graph is bipartite if its vertices can be divided into two disjoint sets
+                   such that every edge connects a vertex from one set to the other.
+                   Equivalently, a graph is bipartite if and only if it contains no odd-length cycle.</p>
+
+                <h3>BFS 2-Coloring Method</h3>
+                <ul>
+                    <li>Assign color 0 to start node (Blue).</li>
+                    <li>For each unvisited neighbor: assign opposite color.</li>
+                    <li>If a neighbor has the same color → NOT bipartite.</li>
+                    <li>Handles disconnected graphs automatically.</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🔵 Blue  — Side A (color 0)</li>
+                    <li>🟠 Orange — Side B (color 1)</li>
+                    <li>🔴 Red   — Conflict! (same color neighbors)</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V + E)</li>
+                    <li><strong>Space:</strong> O(V)</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Matching problems (job assignment).</li>
+                    <li>Detecting even/odd cycles.</li>
+                    <li>Network flow problems.</li>
+                    <li>Stable marriage problem.</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/bipartite_check.js"></script>
+</body>
+</html>

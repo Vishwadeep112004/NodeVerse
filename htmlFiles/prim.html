@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Prim's MST Algorithm</title>
+    <meta name="description" content="Visualize Prim's Minimum Spanning Tree algorithm with greedy edge selection step by step.">
+    <link rel="stylesheet" href="../CssFiles/prim.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Prim's Algorithm — MST</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Edges (0-1, 1-2, 0-2)">
+                <input id="weights" type="text" placeholder="Weights (4, 1, 2) ← required">
+                <input id="start" type="number" placeholder="Start Node" value="0">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)" disabled>Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runPrim()">Run Prim's MST</button>
+            </div>
+            <div class="info">
+                <h3>What is a Minimum Spanning Tree?</h3>
+                <p>A Minimum Spanning Tree (MST) of a weighted undirected graph is a
+                   spanning tree with the minimum possible total edge weight.
+                   It connects all vertices with no cycles and minimum cost.</p>
+
+                <h3>Prim's Algorithm</h3>
+                <ul>
+                    <li>Start from any node. Mark it as in MST.</li>
+                    <li>Add the minimum weight edge connecting MST to non-MST vertex.</li>
+                    <li>Repeat until all vertices are in MST.</li>
+                    <li>Uses a min-priority queue (greedy approach).</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🟡 Yellow — start node selected</li>
+                    <li>🟠 Orange — candidate node (being considered)</li>
+                    <li>🟢 Green  — node added to MST</li>
+                    <li>Active edges — the MST edges chosen</li>
+                </ul>
+
+                <h3>Prim's vs Kruskal's</h3>
+                <ul>
+                    <li>Prim's: grows MST from a source, good for dense graphs.</li>
+                    <li>Kruskal's: sorts all edges, good for sparse graphs.</li>
+                    <li>Both produce the same MST (may differ in edge choice for equal weights).</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O((V + E) log V) with min-heap</li>
+                    <li><strong>Space:</strong> O(V + E)</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Network design (minimum cable/road cost).</li>
+                    <li>Cluster analysis in machine learning.</li>
+                    <li>Circuit design and VLSI layout.</li>
+                    <li>Approximation algorithms for TSP.</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/prim.js"></script>
+</body>
+</html>

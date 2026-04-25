@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Bellman-Ford Algorithm</title>
+    <meta name="description" content="Visualize Bellman-Ford shortest path algorithm with negative edge weight support and cycle detection.">
+    <link rel="stylesheet" href="../CssFiles/bellman_ford.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Bellman-Ford Algorithm</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Edges (0-1, 1-2, 0-2)">
+                <input id="weights" type="text" placeholder="Weights (4, -1, 2) ← supports negatives">
+                <input id="start" type="number" placeholder="Start Node" value="0">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runBellmanFord()">Run Bellman-Ford</button>
+            </div>
+            <div class="info">
+                <h3>What is Bellman-Ford?</h3>
+                <p>Bellman-Ford computes shortest paths from a source to all vertices.
+                   Unlike Dijkstra, it handles <strong>negative edge weights</strong>
+                   and can detect <strong>negative cycles</strong>.</p>
+
+                <h3>How it Works</h3>
+                <ul>
+                    <li>Initialize dist[src]=0, all others=∞.</li>
+                    <li>Repeat V-1 times: relax every edge (u,v,w).</li>
+                    <li>Relaxation: if dist[u]+w &lt; dist[v], update dist[v].</li>
+                    <li>V-th pass: if any update occurs → negative cycle!</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🟡 Yellow — source node</li>
+                    <li>🟠 Orange — distance just updated/relaxed</li>
+                    <li>🔴 Red    — negative cycle detected</li>
+                    <li>📦 Label below = current best distance</li>
+                </ul>
+
+                <h3>Dijkstra vs Bellman-Ford</h3>
+                <ul>
+                    <li>Dijkstra: O((V+E)logV), no negative weights.</li>
+                    <li>Bellman-Ford: O(VE), supports negatives + cycle detection.</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V × E)</li>
+                    <li><strong>Space:</strong> O(V)</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Routing protocols (RIP — distance vector).</li>
+                    <li>Currency arbitrage detection.</li>
+                    <li>Shortest paths with negative weights.</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/bellman_ford.js"></script>
+</body>
+</html>

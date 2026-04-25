@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Topological Sort (Kahn's Algorithm)</title>
+    <meta name="description" content="Visualize Topological Sort using Kahn's Algorithm (BFS-based indegree method) step by step on a directed acyclic graph.">
+    <link rel="stylesheet" href="../CssFiles/topological_sort_kahn.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+
+            <h2>Topological Sort — Kahn's Algorithm</h2>
+
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Directed Edges (0-1, 1-2)">
+                <input id="weights" type="text" placeholder="Weights (not needed here)">
+
+                <!-- Kahn's works on directed graphs only — locked to directed -->
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn" onclick="setType(false)" disabled>Undirected</button>
+                    <button id="directedBtn"   class="type-btn active" onclick="setType(true)">Directed</button>
+                </div>
+
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runTopoKahn()">Run Kahn's Topo Sort</button>
+            </div>
+
+            <div class="info">
+
+                <h3>What is Topological Sort?</h3>
+                <p>
+                    A topological ordering of a Directed Acyclic Graph (DAG) is a linear
+                    arrangement of vertices such that for every directed edge u → v,
+                    vertex u appears before v in the ordering.
+                </p>
+
+                <h3>Kahn's Algorithm (BFS-based)</h3>
+                <ul>
+                    <li>Compute <strong>indegree</strong> of all nodes.</li>
+                    <li>Enqueue all nodes with indegree 0.</li>
+                    <li>While queue is not empty:</li>
+                    <li>→ Dequeue node u, add to result.</li>
+                    <li>→ For each neighbor v: decrement indegree[v].</li>
+                    <li>→ If indegree[v] becomes 0, enqueue v.</li>
+                    <li>If result size ≠ n → cycle detected.</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🟡 Yellow — in queue (indegree = 0)</li>
+                    <li>🟢 Green — currently being processed</li>
+                    <li>🟣 Purple — finalized in topo order</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V + E)</li>
+                    <li><strong>Space:</strong> O(V)</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Build systems (Makefile dependency resolution).</li>
+                    <li>Task scheduling with prerequisites.</li>
+                    <li>Course prerequisite ordering.</li>
+                    <li>Compiler instruction ordering.</li>
+                    <li>Package managers (npm, pip).</li>
+                </ul>
+
+            </div>
+
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+
+            <div class="areaForCode" id="codeArea"></div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/topological_sort_kahn.js"></script>
+
+    <!-- Lock to directed on page load -->
+    <script>
+        window.addEventListener("DOMContentLoaded", () => setType(true));
+    </script>
+
+</body>
+
+</html>

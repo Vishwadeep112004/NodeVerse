@@ -56,3 +56,11 @@ function goToBellmanFordVisualizer(){
 function goToFloydWarshallVisualizer(){
     window.location.href="./floyd_warshall.html"
 }
+
+function goToPrimVisualizer(){
+    window.location.href="./prim.html"
+}
+
+function goToKruskalVisualizer(){
+    window.location.href="./kruskal.html"
+}

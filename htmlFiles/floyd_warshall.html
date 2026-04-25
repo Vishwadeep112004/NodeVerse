@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Floyd-Warshall Algorithm</title>
+    <meta name="description" content="Visualize Floyd-Warshall all-pairs shortest path algorithm with live distance matrix updates.">
+    <link rel="stylesheet" href="../CssFiles/floyd_warshall.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Floyd-Warshall Algorithm</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes (max 6)" min="1" max="6">
+                <input id="edges" type="text" placeholder="Edges (0-1, 1-2, 0-2)">
+                <input id="weights" type="text" placeholder="Weights (4, 1, 2) ← required">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)">Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runFloydWarshall()">Run Floyd-Warshall</button>
+            </div>
+            <div class="info">
+                <h3>What is Floyd-Warshall?</h3>
+                <p>Floyd-Warshall finds shortest paths between <strong>all pairs</strong>
+                   of vertices in a weighted graph. It works with negative weights
+                   and detects negative cycles via diagonal checks.</p>
+
+                <h3>How it Works (3 nested loops)</h3>
+                <ul>
+                    <li>For each intermediate node k (0 to n-1):</li>
+                    <li>→ For each pair (i, j):</li>
+                    <li>→ If dist[i][k] + dist[k][j] &lt; dist[i][j]:</li>
+                    <li>→ Update dist[i][j] = dist[i][k] + dist[k][j]</li>
+                    <li>If dist[i][i] &lt; 0 after → negative cycle.</li>
+                </ul>
+
+                <h3>Visual Output</h3>
+                <ul>
+                    <li>🟡 Yellow node — current intermediate node k</li>
+                    <li>🟠 Orange nodes — pair (i,j) being updated</li>
+                    <li>📊 Distance matrix shown live in code panel</li>
+                    <li>🟢 Green all nodes — algorithm complete</li>
+                </ul>
+
+                <h3>⚠️ Note</h3>
+                <ul>
+                    <li>Keep nodes ≤ 6 for readable matrix display.</li>
+                    <li>Weights are required for this algorithm.</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V³)</li>
+                    <li><strong>Space:</strong> O(V²) — the distance matrix</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>All-pairs shortest paths in road networks.</li>
+                    <li>Transitive closure of a graph.</li>
+                    <li>Network latency analysis.</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/floyd_warshall.js"></script>
+</body>
+</html>

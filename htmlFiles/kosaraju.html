@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Kosaraju's SCC Algorithm</title>
+    <meta name="description" content="Visualize Strongly Connected Components using Kosaraju's 2-pass DFS algorithm step by step.">
+    <link rel="stylesheet" href="../CssFiles/kosaraju.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+
+            <h2>Kosaraju's Algorithm — SCC</h2>
+
+            <div class="controls">
+                <input id="n"       type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges"   type="text"   placeholder="Directed Edges (0-1, 1-2, 2-0)">
+                <input id="weights" type="text"   placeholder="Weights (not needed)">
+
+                <!-- Kosaraju always works on directed graphs — locked -->
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn" onclick="setType(false)" disabled>Undirected</button>
+                    <button id="directedBtn"   class="type-btn active" onclick="setType(true)">Directed</button>
+                </div>
+
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runKosaraju()">Run Kosaraju</button>
+            </div>
+
+            <div class="info">
+
+                <h3>What are Strongly Connected Components?</h3>
+                <p>
+                    A Strongly Connected Component (SCC) of a directed graph is a maximal
+                    set of vertices such that there is a path from every vertex to every
+                    other vertex within the set.
+                </p>
+
+                <h3>Kosaraju's Algorithm — 2 DFS Passes</h3>
+                <ul>
+                    <li><strong>Pass 1:</strong> Run DFS on original graph.</li>
+                    <li>→ Record nodes in <strong>finish order</strong> onto a stack.</li>
+                    <li><strong>Pass 2:</strong> Reverse all edges to get transpose graph.</li>
+                    <li>→ Pop from stack and run DFS on reversed graph.</li>
+                    <li>→ Each DFS tree in pass 2 = one SCC.</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>🟡 Yellow — active in DFS (being explored)</li>
+                    <li>🟢 Green  — visited in pass 1</li>
+                    <li>⬜ Slate  — finished pass 1 (in stack)</li>
+                    <li>🟠 Orange — being explored in pass 2</li>
+                    <li>🎨 Final color = SCC group (each SCC gets unique color)</li>
+                </ul>
+
+                <h3>⚠️ Important</h3>
+                <ul>
+                    <li>Works on <strong>directed graphs only</strong>.</li>
+                    <li>Edge input format: <code>0-1, 1-2, 2-0, 3-0</code></li>
+                    <li>Arrows in graph show direction.</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(V + E) — two DFS passes</li>
+                    <li><strong>Space:</strong> O(V + E) — for reversed graph</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Finding clusters in social networks.</li>
+                    <li>Compiler optimization (basic blocks).</li>
+                    <li>Solving 2-SAT problems.</li>
+                    <li>Web crawling &amp; link analysis.</li>
+                    <li>Detecting cycles in directed graphs.</li>
+                </ul>
+
+            </div>
+
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+
+            <div class="areaForCode" id="codeArea"></div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/kosaraju.js"></script>
+
+    <!-- Lock to directed on page load -->
+    <script>
+        window.addEventListener("DOMContentLoaded", () => setType(true));
+    </script>
+
+</body>
+
+</html>

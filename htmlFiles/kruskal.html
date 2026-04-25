@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse - Kruskal's MST Algorithm</title>
+    <meta name="description" content="Visualize Kruskal's Minimum Spanning Tree algorithm using Union-Find with edge sorting step by step.">
+    <link rel="stylesheet" href="../CssFiles/kruskal.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <h2>Kruskal's Algorithm — MST</h2>
+            <div class="controls">
+                <input id="n" type="number" placeholder="Number of Nodes" min="1">
+                <input id="edges" type="text" placeholder="Edges (0-1, 1-2, 0-2)">
+                <input id="weights" type="text" placeholder="Weights (4, 1, 2) ← required">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn" class="type-btn" onclick="setType(true)" disabled>Directed</button>
+                </div>
+                <button onclick="showGraph()">Show Graph</button>
+                <button onclick="runKruskal()">Run Kruskal's MST</button>
+            </div>
+            <div class="info">
+                <h3>What is Kruskal's Algorithm?</h3>
+                <p>Kruskal's builds a Minimum Spanning Tree by greedily picking the smallest
+                   weight edge that does not form a cycle, using a Union-Find (DSU) data structure
+                   to track connected components.</p>
+
+                <h3>How it Works</h3>
+                <ul>
+                    <li>Sort all edges by weight (ascending).</li>
+                    <li>For each edge (u, v, w):</li>
+                    <li>→ If find(u) ≠ find(v): add to MST, unite(u, v).</li>
+                    <li>→ Else: skip (would create a cycle).</li>
+                    <li>Stop when MST has V-1 edges.</li>
+                </ul>
+
+                <h3>Color Legend</h3>
+                <ul>
+                    <li>Active edge (yellow) — edge being considered</li>
+                    <li>🔴 Red edge — rejected (would create cycle)</li>
+                    <li>🟢 Green node — added to MST</li>
+                    <li>Active + green = final MST edge accepted</li>
+                </ul>
+
+                <h3>Union-Find (DSU)</h3>
+                <ul>
+                    <li>Uses path compression + union by rank.</li>
+                    <li>Nearly O(1) per operation (inverse Ackermann).</li>
+                    <li>Efficiently checks if two nodes are already connected.</li>
+                </ul>
+
+                <h3>Time &amp; Space Complexity</h3>
+                <ul>
+                    <li><strong>Time:</strong> O(E log E) — dominated by sorting</li>
+                    <li><strong>Space:</strong> O(V) — DSU arrays</li>
+                </ul>
+
+                <h3>Applications</h3>
+                <ul>
+                    <li>Minimum cost network design.</li>
+                    <li>Image segmentation in computer vision.</li>
+                    <li>Approximation for TSP.</li>
+                    <li>Clustering algorithms.</li>
+                </ul>
+            </div>
+            <div class="buttons">
+                <button onclick="showCode('cpp')">C++</button>
+                <button onclick="showCode('java')">Java</button>
+                <button onclick="showCode('python')">Python</button>
+            </div>
+            <div class="areaForCode" id="codeArea"></div>
+        </div>
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/kruskal.js"></script>
+</body>
+</html>
