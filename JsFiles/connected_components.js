@@ -1,4 +1,4 @@
-let nodes = 0;
+let nodes, ed;
 let adjList = [];
 let components = [];
 let nodeComponent = [];
@@ -98,7 +98,8 @@ function displayComponents() {
     let output = "";
 
     components.forEach((comp, i) => {
-        output += `Component ${i}: ${comp.join(" → ")}\n`;
+        output += `Component ${i}: ${comp.join(" → ")}
+`;
     });
 
     box.textContent = output;

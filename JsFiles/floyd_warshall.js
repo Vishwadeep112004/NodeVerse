@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Floyd-Warshall JS Loaded");
 
-let steps = [];
-let isRunning = false;
 
 /* ================= MAIN RUN ================= */
 
@@ -44,21 +42,7 @@ function run(adjMatrix) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 700;
-
-    function next() {
-        if (i >= steps.length) { isRunning = false; return; }
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
@@ -90,7 +74,8 @@ function applyStep(s) {
     if (s.t === "result") {
         if (s.negCycle) {
             document.getElementById("codeArea").textContent =
-                "⚠️ Negative Cycle Detected!\n(dist[i][i] < 0)";
+                "⚠️ Negative Cycle Detected!
+(dist[i][i] < 0)";
         } else {
             showMatrix(s.dist, "✅ Final All-Pairs Shortest Paths:");
         }
@@ -101,13 +86,18 @@ function applyStep(s) {
 
 function showMatrix(dist, label) {
     const INF = Infinity;
-    let text = (label || "") + "\n\n";
-    text += "     " + Array.from({ length: nodes }, (_, i) => String(i).padStart(5)).join("") + "\n";
-    text += "     " + "─────".repeat(nodes) + "\n";
+    let text = (label || "") + "
+
+";
+    text += "     " + Array.from({ length: nodes }, (_, i) => String(i).padStart(5)).join("") + "
+";
+    text += "     " + "─────".repeat(nodes) + "
+";
     dist.forEach((row, i) => {
         text += String(i).padStart(3) + " │ ";
         text += row.map(v => (v === INF ? "  ∞" : String(v).padStart(3))).join("  ");
-        text += "\n";
+        text += "
+";
     });
     document.getElementById("codeArea").textContent = text;
 }
@@ -117,8 +107,7 @@ function showMatrix(dist, label) {
 function resetGraph() {
     nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
     edgeList.forEach(e => { e.active = false; });
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -154,7 +143,13 @@ function runFloydWarshall() {
 
     steps = [];
     run(adjMatrix);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */
@@ -181,7 +176,7 @@ void floydWarshall(int n,
     // Check negative cycle
     for (int i = 0; i < n; i++)
         if (dist[i][i] < 0)
-            cout << "Neg Cycle!\\n";
+            cout << "Neg Cycle!\n";
 }`;
 
     } else if (lang === "java") {
@@ -210,8 +205,8 @@ void floydWarshall(int n,
     for k in range(n):
         for i in range(n):
             for j in range(n):
-                if dist[i][k] != INF and \\
-                   dist[k][j] != INF and \\
+                if dist[i][k] != INF and \
+                   dist[k][j] != INF and \
                    dist[i][k]+dist[k][j] < dist[i][j]:
                     dist[i][j] = dist[i][k]+dist[k][j]
 

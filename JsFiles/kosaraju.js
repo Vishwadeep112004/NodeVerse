@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Kosaraju's Algorithm JS Loaded");
 
-let steps = [];
-let isRunning = false;
 
 const SCC_COLORS = [
     "#22c55e", // green
@@ -40,13 +38,17 @@ function run(adjList, radjList) {
         steps.push({ t: "done", u }); // grey — finished in pass 1
     }
 
-    steps.push({ t: "log", msg: "⏳ Pass 1: DFS on original graph\n(recording finish order...)" });
+    steps.push({ t: "log", msg: "⏳ Pass 1: DFS on original graph
+(recording finish order...)" });
 
     for (let i = 0; i < nodes; i++) {
         if (!visited[i]) dfs1(i);
     }
 
-    steps.push({ t: "log", msg: "✅ Pass 1 complete.\nFinish order: [" + finishStack.join(", ") + "]\n\n⏳ Pass 2: DFS on reversed graph..." });
+    steps.push({ t: "log", msg: "✅ Pass 1 complete.
+Finish order: [" + finishStack.join(", ") + "]
+
+⏳ Pass 2: DFS on reversed graph..." });
 
     /* ===== PASS 2: DFS on reversed graph in reverse finish order ===== */
 
@@ -82,25 +84,7 @@ function run(adjList, radjList) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 600;
-
-    function next() {
-        if (i >= steps.length) {
-            isRunning = false;
-            return;
-        }
-
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
@@ -117,10 +101,14 @@ function applyStep(s) {
     }
 
     if (s.t === "result") {
-        let text = `✅ Found ${s.numSCC} Strongly Connected Component(s).\n\n`;
-        text += "Color legend:\n";
+        let text = `✅ Found ${s.numSCC} Strongly Connected Component(s).
+
+`;
+        text += "Color legend:
+";
         for (let i = 0; i < s.numSCC; i++) {
-            text += `  SCC ${i}: ${SCC_COLORS[i % SCC_COLORS.length]}\n`;
+            text += `  SCC ${i}: ${SCC_COLORS[i % SCC_COLORS.length]}
+`;
         }
         document.getElementById("codeArea").textContent = text;
         return;
@@ -173,8 +161,7 @@ function resetGraph() {
     edgeList.forEach(edge => {
         edge.active = false;
     });
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -210,7 +197,13 @@ function runKosaraju() {
 
     steps = [];
     run(adjList, radjList);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */

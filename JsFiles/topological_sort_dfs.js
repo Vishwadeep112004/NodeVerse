@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Topological Sort (DFS) JS Loaded");
 
-let steps = [];
-let isRunning = false;
 
 /* ================= MAIN RUN ================= */
 
@@ -37,21 +35,7 @@ function run(adjList) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 600;
-
-    function next() {
-        if (i >= steps.length) { isRunning = false; return; }
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
@@ -59,7 +43,8 @@ function applyStep(s) {
 
     if (s.t === "result") {
         document.getElementById("codeArea").textContent =
-            "✅ Topological Order (DFS):\n" + s.order.join(" → ");
+            "✅ Topological Order (DFS):
+" + s.order.join(" → ");
         return;
     }
 
@@ -89,8 +74,7 @@ function applyStep(s) {
 function resetGraph() {
     nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
     edgeList.forEach(e => { e.active = false; });
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -116,7 +100,13 @@ function runTopoDFS() {
 
     steps = [];
     run(adjList);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */

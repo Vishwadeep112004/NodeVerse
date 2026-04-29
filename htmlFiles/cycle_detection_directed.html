@@ -1,34 +1,76 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NodeVerse - Graph Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse — Cycle Detection (Directed)</title>
+    <link rel="stylesheet" href="../CssFiles/shared.css">
     <link rel="stylesheet" href="../CssFiles/cycle_detection_directed.css">
 </head>
 
-<body>
+<body class="algo-page">
+
+    <!-- NAV -->
+    <nav>
+        <h2><a href="./Home.html">NodeVerse</a></h2>
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <ul id="nav-links">
+            <li><a href="./Home.html">Home</a></li>
+            <li><a href="./Algorithms.html">Algorithms</a></li>
+            <li><a href="./Visualizer.html">Visualizer</a></li>
+        </ul>
+    </nav>
 
     <div class="container">
 
+        <!-- LEFT PANEL -->
         <div class="left-panel">
 
-            <h2>Cycle Detection (Directed)</h2>
+            <h2>Cycle Detection — Directed</h2>
 
-            <div class="controls">
-                <input id="n" type="number" placeholder="Number of Nodes">
-                <input id="edges" type="text" placeholder="Edges (0-1,0-2)">
-                <input id="weights" type="text" placeholder="Weights (optional)">
-                <input id="start" type="number" placeholder="Start Node" value="0">
-                <div class="graph-type">
-                    <button id="DFS" class="type-btn active" onclick="setType(true); setMethod(false)">With DFS</button>
-                    <button id="BFS" class="type-btn" onclick="setType(false); setMethod(false)">With BFS</button>
-                </div>
-                <button onclick="showGraph()">Show Graph</button>
-                <button onclick="runCycleDetection()">Run Cycle Detection</button>
+            <div class="status-badge" id="statusBadge">
+                <span class="dot"></span>
+                <span id="statusText">Ready</span>
             </div>
-            <div class="info">
 
+            <!-- CONTROLS -->
+            <div class="controls">
+                <input id="n"      type="number" placeholder="Number of Nodes" min="1" max="20">
+                <input id="edges"  type="text"   placeholder="Edges: 0-1,1-2,2-3">
+                <input id="weights" type="text"  placeholder="Weights (optional)">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn"   class="type-btn"        onclick="setType(true)">Directed</button>
+                </div>
+                <button onclick="showGraph()">🔧 Build Graph</button>
+                <button onclick="runCycleDetectionDirected()">⚡ Run Algorithm</button>
+            </div>
+
+            <!-- STEP CONTROLS -->
+            <div class="step-controls">
+                <button class="step-btn" onclick="StepController.prevStep()" title="Prev Step (←)">◀</button>
+                <button class="step-btn play-btn" id="playBtn" onclick="StepController.togglePlay()" title="Play/Pause (Space)">▶ Play</button>
+                <button class="step-btn" onclick="StepController.nextStep()" title="Next Step (→)">▶</button>
+                <button class="step-btn" onclick="StepController.reset()" title="Reset">↺</button>
+                <span id="stepLabel">Step 0 / 0</span>
+            </div>
+
+            <!-- PROGRESS BAR -->
+            <div class="progress-bar"><div id="progressFill"></div></div>
+
+            <!-- SPEED -->
+            <div class="speed-wrap">
+                <label>Speed:</label>
+                <input type="range" id="speedSlider" min="100" max="2000" value="600" step="100"
+                    oninput="StepController.setSpeed(2100 - this.value)">
+                <span id="speedVal" style="font-size:0.65rem;color:var(--text2)">600ms</span>
+            </div>
+
+            <div class="divider"></div>
+            
+
+            <!-- INFO -->
+            <div class="info">
                 <h3>What is Cycle Detection in Graph?</h3>
                 <p>
                     Cycle detection is the process of determining whether a graph contains
@@ -75,18 +117,19 @@
                     and dependencies in graphs. It is essential in systems like
                     networking, operating systems, and graph-based problem solving.
                 </p>
-
             </div>
+
+            <div class="divider"></div>
+
+            <!-- CODE VIEWER -->
             <div class="buttons">
                 <button onclick="showCode('cpp')">C++</button>
                 <button onclick="showCode('java')">Java</button>
                 <button onclick="showCode('python')">Python</button>
             </div>
-
             <div class="areaForCode" id="codeArea"></div>
 
         </div>
-
 
         <!-- RIGHT PANEL -->
         <div class="right-panel">
@@ -98,7 +141,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <script src="../JsFiles/visualizer.js"></script>
     <script src="../JsFiles/cycle_detection_directed.js"></script>
-
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", () => {
+            document.getElementById("nav-links").classList.toggle("active");
+        });
+        document.getElementById("speedSlider").addEventListener("input", function() {
+            const ms = 2100 - this.value;
+            document.getElementById("speedVal").textContent = ms + "ms";
+            StepController.setSpeed(ms);
+        });
+    </script>
 </body>
-
 </html>

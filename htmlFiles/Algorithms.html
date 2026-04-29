@@ -3,79 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NodeVerse - Algorithms</title>
+<title>NodeVerse — Algorithms</title>
+<meta name="description" content="Browse all 15 graph algorithms in NodeVerse — organized by category with difficulty ratings and interactive visualizations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../CssFiles/algorithms.css">
 </head>
 
 <body>
 
+<!-- NAV -->
 <nav>
-    <h2>NodeVerse</h2>
-
-    <div class="menu-toggle" id="menu-toggle">
-        ☰
-    </div>
-
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
     <ul id="nav-links">
         <li><a href="./Home.html">Home</a></li>
-        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./Algorithms.html" class="active-nav">Algorithms</a></li>
         <li><a href="./Visualizer.html">Visualizer</a></li>
-        <li><a href="#">Team</a></li>
     </ul>
 </nav>
 
-<section class="pipeline">
-
-    <!-- Group 1 -->
-    <div class="group">
-        <div class="node" onclick="goToBFSVisualizer()">BFS</div>
-        <div class="node" onclick="goToDFSVisualizer()">DFS</div>
+<!-- PAGE HEADER -->
+<header class="page-header">
+    <div class="page-header-inner">
+        <span class="page-tag">Algorithm Library</span>
+        <h1>Graph Algorithms</h1>
+        <p>15 algorithms across 6 categories — from basic traversal to advanced SCC detection.</p>
     </div>
+</header>
 
-    <div class="arrow">→</div>
+<!-- CATEGORY GRID -->
+<main class="categories">
 
-    <!-- Group 2 -->
-    <div class="group">
-        <div class="node" onclick="goToConnectedComponentsVisualizer()">Connected Components</div>
-        <div class="node" onclick="goToCycleDetectionUndirectedVisualizer()">Cycle Detection (Undirected)</div>
+    <!-- BASIC TRAVERSAL -->
+    <section class="category" id="cat-traversal">
+        <div class="cat-header" data-color="#00ff88">
+            <div class="cat-title-row">
+                <span class="cat-icon">🔍</span>
+                <h2 class="cat-title">Basic Traversal</h2>
+                <span class="diff-badge beginner">Beginner</span>
+            </div>
+            <p class="cat-desc">Fundamental graph exploration strategies — the building blocks of all advanced algorithms.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./bfs.html'" data-tip="Explores level by level using a Queue. Finds shortest path in unweighted graphs. O(V+E)">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">BFS</div>
+                    <div class="card-info">
+                        <div class="card-name">Breadth First Search</div>
+                        <div class="card-meta">Queue · O(V+E) · Shortest path in unweighted graphs</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge beginner">Beginner</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Explores level by level using a Queue. Finds shortest path in unweighted graphs.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./dfs.html'" data-tip="Goes deep before backtracking. Uses Stack/recursion. Great for path finding. O(V+E)">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">DFS</div>
+                    <div class="card-info">
+                        <div class="card-name">Depth First Search</div>
+                        <div class="card-meta">Stack · O(V+E) · Full graph exploration</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge beginner">Beginner</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Goes deep before backtracking. Uses Stack/recursion. Great for path finding.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./connected_components.html'" data-tip="Identifies all disconnected subgraphs using BFS/DFS from each unvisited node.">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">CC</div>
+                    <div class="card-info">
+                        <div class="card-name">Connected Components</div>
+                        <div class="card-meta">BFS/DFS · O(V+E) · Subgraph identification</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge beginner">Beginner</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Identifies all disconnected subgraphs using BFS/DFS from each unvisited node.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CYCLE DETECTION -->
+    <section class="category" id="cat-cycle">
+        <div class="cat-header" data-color="#facc15">
+            <div class="cat-title-row">
+                <span class="cat-icon">🔄</span>
+                <h2 class="cat-title">Cycle Detection</h2>
+                <span class="diff-badge intermediate">Intermediate</span>
+            </div>
+            <p class="cat-desc">Detect cycles and verify graph properties like bipartiteness using coloring techniques.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./cycle_detection_undirected.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">CU</div>
+                    <div class="card-info">
+                        <div class="card-name">Cycle Detection (Undirected)</div>
+                        <div class="card-meta">Union-Find / DFS · O(V+E)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge intermediate">Intermediate</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Detects back edges in an undirected graph using DFS with parent tracking.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./cycle_detection_directed.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">CD</div>
+                    <div class="card-info">
+                        <div class="card-name">Cycle Detection (Directed)</div>
+                        <div class="card-meta">DFS + Color · O(V+E)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge intermediate">Intermediate</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Uses 3-color DFS (white/grey/black) to detect back edges in a directed graph.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./bipartite_check.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">BP</div>
+                    <div class="card-info">
+                        <div class="card-name">Bipartite Graph Check</div>
+                        <div class="card-meta">BFS 2-Coloring · O(V+E)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge intermediate">Intermediate</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Checks if a graph can be 2-colored (no odd cycles) using BFS with alternating colors.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOPOLOGICAL SORT -->
+    <section class="category" id="cat-topo">
+        <div class="cat-header" data-color="#00d4ff">
+            <div class="cat-title-row">
+                <span class="cat-icon">📐</span>
+                <h2 class="cat-title">Topological Sort</h2>
+                <span class="diff-badge intermediate">Intermediate</span>
+            </div>
+            <p class="cat-desc">Linear ordering of vertices in a DAG such that for every edge u→v, u comes before v.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./topological_sort_dfs.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00d4ff">TS</div>
+                    <div class="card-info">
+                        <div class="card-name">Topological Sort (DFS)</div>
+                        <div class="card-meta">DFS + Stack · O(V+E) · DAG ordering</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge intermediate">Intermediate</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Push nodes to a stack after completing all neighbors in DFS. Reverse gives topo order.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./topological_sort_kahn.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00d4ff">KN</div>
+                    <div class="card-info">
+                        <div class="card-name">Topological Sort (Kahn's)</div>
+                        <div class="card-meta">BFS + In-Degree · O(V+E)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge intermediate">Intermediate</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">BFS approach: repeatedly remove nodes with zero in-degree. Also detects cycles in DAGs.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCC -->
+    <section class="category" id="cat-scc">
+        <div class="cat-header" data-color="#a855f7">
+            <div class="cat-title-row">
+                <span class="cat-icon">🌀</span>
+                <h2 class="cat-title">Strongly Connected Components</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+            <p class="cat-desc">Find maximal subgraphs where every vertex is reachable from every other vertex.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./kosaraju.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#a855f7">KS</div>
+                    <div class="card-info">
+                        <div class="card-name">Kosaraju's Algorithm</div>
+                        <div class="card-meta">2-Pass DFS · O(V+E) · SCC detection</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Two DFS passes: record finish order, then DFS on reversed graph in reverse finish order.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./tarjan.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#a855f7">TJ</div>
+                    <div class="card-info">
+                        <div class="card-name">Tarjan's Algorithm</div>
+                        <div class="card-meta">DFS + Stack · O(V+E) · Single pass SCC</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Single-pass DFS using low-link values and a stack. More elegant than Kosaraju's.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHORTEST PATH -->
+    <section class="category" id="cat-shortest">
+        <div class="cat-header" data-color="#f97316">
+            <div class="cat-title-row">
+                <span class="cat-icon">🗺️</span>
+                <h2 class="cat-title">Shortest Path</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+            <p class="cat-desc">Find minimum cost paths between vertices in weighted graphs.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./dijkstra.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">DJ</div>
+                    <div class="card-info">
+                        <div class="card-name">Dijkstra's Algorithm</div>
+                        <div class="card-meta">Priority Queue · O((V+E) log V) · Non-negative weights</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Greedy algorithm using a min-heap. Only works with non-negative edge weights.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./bellman_ford.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">BF</div>
+                    <div class="card-info">
+                        <div class="card-name">Bellman-Ford Algorithm</div>
+                        <div class="card-meta">Edge Relaxation · O(VE) · Negative edges OK</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Relaxes all edges V-1 times. Handles negative weights and detects negative cycles.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./floyd_warshall.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">FW</div>
+                    <div class="card-info">
+                        <div class="card-name">Floyd-Warshall Algorithm</div>
+                        <div class="card-meta">DP · O(V³) · All-pairs shortest path</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Dynamic programming to find shortest paths between ALL pairs of vertices.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MST -->
+    <section class="category" id="cat-mst">
+        <div class="cat-header" data-color="#ec4899">
+            <div class="cat-title-row">
+                <span class="cat-icon">🌲</span>
+                <h2 class="cat-title">Minimum Spanning Tree</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+            <p class="cat-desc">Find the minimum weight set of edges that connects all vertices without cycles.</p>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card" onclick="location.href='./prim.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#ec4899">PR</div>
+                    <div class="card-info">
+                        <div class="card-name">Prim's Algorithm</div>
+                        <div class="card-meta">Greedy + PQ · O((V+E) log V) · Vertex-based</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Grows MST from a starting vertex, always picking the minimum edge crossing the cut.</div>
+            </div>
+
+            <div class="algo-card" onclick="location.href='./kruskal.html'">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#ec4899">KR</div>
+                    <div class="card-info">
+                        <div class="card-name">Kruskal's Algorithm</div>
+                        <div class="card-meta">Sort + Union-Find · O(E log E) · Edge-based</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="diff-badge advanced">Advanced</span>
+                    <span class="card-arrow">→</span>
+                </div>
+                <div class="card-tooltip">Sorts all edges by weight, adds each if it doesn't form a cycle (Union-Find).</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <span class="footer-brand">NodeVerse</span>
+        <span class="footer-sep">·</span>
+        <span>Graph Algorithm Visualizer</span>
+        <span class="footer-sep">·</span>
+        <span>Built by Vishu &amp; Team © 2026</span>
     </div>
+</footer>
 
-    <div class="arrow">→</div>
-
-    <!-- Group 3 -->
-    <div class="group">
-        <div class="node" onclick="goToCycleDetectionDirectedVisualizer()">Cycle Detection (Directed)</div>
-        <div class="node" onclick="goToBipartiteGraphCheckVisualizer()">Bipartite Graph Check</div>
-        <div class="node" onclick="goToTopologicalSortDFSVisualizer()">Topological Sort (DFS)</div>
-        <div class="node" onclick="goToTopologicalSortKahnVisualizer()">Topological Sort (Kahn)</div>
-    </div>
-
-    <div class="arrow">→</div>
-
-    <!-- Group 4 -->
-    <div class="group">
-        <div class="node" onclick="goToKosarajuVisualizer()">Kosaraju’s Algorithm</div>
-        <div class="node" onclick="goToTarjanVisualizer()">Tarjan’s Algorithm</div>
-    </div>
-
-    <div class="arrow">→</div>
-
-    <!-- Group 5 -->
-    <div class="group">
-        <div class="node" onclick="goToDijkstraVisualizer()">Dijkstra’s Algorithm</div>
-        <div class="node" onclick="goToBellmanFordVisualizer()">Bellman-Ford Algorithm</div>
-        <div class="node" onclick="goToFloydWarshallVisualizer()">Floyd-Warshall Algorithm</div>
-    </div>
-
-    <div class="arrow">→</div>
-
-    <!-- Group 6 — MST -->
-    <div class="group">
-        <div class="node" onclick="goToPrimVisualizer()">Prim's Algorithm</div>
-        <div class="node" onclick="goToKruskalVisualizer()">Kruskal's Algorithm</div>
-    </div>
-
-</section>
 <script src="../JsFiles/algorithms.js"></script>
 </body>
 </html>

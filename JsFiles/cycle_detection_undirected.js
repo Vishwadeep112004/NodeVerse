@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Cycle Detection JS Loaded");
 
-let steps = [];
-let isRunning = false;
 let useDFS = true;
 
 /* ================= METHOD TOGGLE ================= */
@@ -108,8 +106,7 @@ function play(){
 
     function next(){
         if(i>=steps.length){
-            isRunning = false;
-            return;
+                        return;
         }
 
         applyStep(steps[i++]);
@@ -200,5 +197,11 @@ function runCycleDetection(){
     steps = [];
 
     run(adjList, start);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }

@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Tarjan's Algorithm JS Loaded");
 
-let steps = [];
-let isRunning = false;
 
 const SCC_COLORS = [
     "#22c55e", "#3b82f6", "#f97316",
@@ -73,28 +71,16 @@ function run(adjList) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 600;
-
-    function next() {
-        if (i >= steps.length) { isRunning = false; return; }
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
 function applyStep(s) {
 
     if (s.t === "result") {
-        let text = `✅ Found ${s.numSCC} SCC(s) via Tarjan's.\n\nColor = SCC group`;
+        let text = `✅ Found ${s.numSCC} SCC(s) via Tarjan's.
+
+Color = SCC group`;
         document.getElementById("codeArea").textContent = text;
         return;
     }
@@ -135,8 +121,7 @@ function applyStep(s) {
 function resetGraph() {
     nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
     edgeList.forEach(e => { e.active = false; e.cycle = false; });
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -161,7 +146,13 @@ function runTarjan() {
 
     steps = [];
     run(adjList);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */

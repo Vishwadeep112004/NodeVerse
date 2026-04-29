@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Topological Sort (Kahn's) JS Loaded");
 
-let steps = [];
-let isRunning = false;
 
 /* ================= MAIN RUN ================= */
 
@@ -62,46 +60,32 @@ function run(adjList) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 600;
-
-    function next() {
-        if (i >= steps.length) {
-            isRunning = false;
-            return;
-        }
-
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
 function applyStep(s) {
 
     if (s.t === "indegree") {
-        let text = "Indegrees:\n";
-        s.degrees.forEach((d, i) => { text += `  Node ${i}: ${d}\n`; });
+        let text = "Indegrees:
+";
+        s.degrees.forEach((d, i) => { text += `  Node ${i}: ${d}
+`; });
         document.getElementById("codeArea").textContent = text;
         return;
     }
 
     if (s.t === "result") {
         document.getElementById("codeArea").textContent =
-            "✅ Topological Order:\n" + s.order.join(" → ");
+            "✅ Topological Order:
+" + s.order.join(" → ");
         return;
     }
 
     if (s.t === "cycle_detected") {
         document.getElementById("codeArea").textContent =
-            "❌ Cycle Detected!\nTopological Sort not possible on cyclic graph.";
+            "❌ Cycle Detected!
+Topological Sort not possible on cyclic graph.";
         return;
     }
 
@@ -138,8 +122,7 @@ function resetGraph() {
     edgeList.forEach(edge => {
         edge.active = false;
     });
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -176,7 +159,13 @@ function runTopoKahn() {
     steps = [];
 
     run(adjList);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */

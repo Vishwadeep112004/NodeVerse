@@ -1,8 +1,6 @@
 let nodes, ed;
 console.log("Bellman-Ford JS Loaded");
 
-let steps = [];
-let isRunning = false;
 let nodeDistLabels = [];
 
 /* ================= DISTANCE LABELS (same pattern as dijkstra.js) ================= */
@@ -90,21 +88,7 @@ function run(edgesRaw, weightArr, start) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 500;
-
-    function next() {
-        if (i >= steps.length) { isRunning = false; return; }
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
@@ -118,11 +102,14 @@ function applyStep(s) {
     if (s.t === "result") {
         if (s.negCycle) {
             document.getElementById("codeArea").textContent =
-                "⚠️ Negative Cycle Detected!\nShortest paths undefined.";
+                "⚠️ Negative Cycle Detected!
+Shortest paths undefined.";
         } else {
-            let text = "✅ Shortest Distances (Bellman-Ford):\n";
+            let text = "✅ Shortest Distances (Bellman-Ford):
+";
             s.dist.forEach((d, i) => {
-                text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}\n`;
+                text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}
+`;
             });
             document.getElementById("codeArea").textContent = text;
         }
@@ -164,8 +151,7 @@ function resetGraph() {
     nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
     edgeList.forEach(e => { e.active = false; e.cycle = false; });
     nodeDistLabels = [];
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+        document.getElementById("codeArea").textContent = "";
 }
 
 /* ================= BUTTON ================= */
@@ -191,7 +177,13 @@ function runBellmanFord() {
 
     steps = [];
     run(edgesRaw, weightArr, start);
-    play();
+    StepController.load(steps);
+
+    if (document.getElementById('statusText'))
+
+        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */

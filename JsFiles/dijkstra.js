@@ -1,9 +1,5 @@
-let nodes, ed;
 console.log("Dijkstra's Algorithm JS Loaded");
-
-let steps = [];
-let isRunning = false;
-let nodeDistLabels = []; // distance displayed below each node
+let nodeDistLabels = [];
 
 /* ================= EXTRA RENDER LAYER (Distance Labels) ================= */
 
@@ -79,25 +75,7 @@ function run(adjList, start) {
 
 /* ================= ANIMATION ================= */
 
-function play() {
-    if (isRunning) return;
-    isRunning = true;
-
-    let i = 0;
-    const delay = 600;
-
-    function next() {
-        if (i >= steps.length) {
-            isRunning = false;
-            return;
-        }
-
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
-}
+/* play() removed — StepController handles playback */
 
 /* ================= APPLY STEP ================= */
 
@@ -147,15 +125,12 @@ function applyStep(s) {
 /* ================= RESET ================= */
 
 function resetGraph() {
-    nodeBodies.forEach(node => {
-        node.render.fillStyle = "#020617";
-    });
-    edgeList.forEach(edge => {
-        edge.active = false;
-    });
+    nodeBodies.forEach(node => { node.render.fillStyle = "#020617"; });
+    edgeList.forEach(edge  => { edge.active = false; });
     nodeDistLabels = [];
-    isRunning = false;
-    document.getElementById("codeArea").textContent = "";
+    if (document.getElementById("codeArea")) {
+        document.getElementById("codeArea").textContent = "";
+    }
 }
 
 /* ================= BUTTON ================= */
@@ -199,7 +174,10 @@ function runDijkstra() {
 
     steps = [];
     run(adjList, start);
-    play();
+    StepController.load(steps);
+    if (document.getElementById("statusText"))
+        document.getElementById("statusText").textContent = steps.length + " steps generated";
+    StepController.play();
 }
 
 /* ================= CODE DISPLAY ================= */
