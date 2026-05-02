@@ -102,10 +102,10 @@ function applyStep(s) {
     if (s.t === "result") {
         if (s.negCycle) {
             document.getElementById("codeArea").textContent =
-                "⚠️ Negative Cycle Detected!
+                "Warning️ Negative Cycle Detected!
 Shortest paths undefined.";
         } else {
-            let text = "✅ Shortest Distances (Bellman-Ford):
+            let text = "Success Shortest Distances (Bellman-Ford):
 ";
             s.dist.forEach((d, i) => {
                 text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}

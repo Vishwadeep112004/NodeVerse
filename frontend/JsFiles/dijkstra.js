@@ -87,7 +87,7 @@ function applyStep(s) {
     }
 
     if (s.t === "result") {
-        let text = "✅ Shortest Distances:\n";
+        let text = "Success Shortest Distances:\n";
         s.dist.forEach((d, i) => {
             text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}\n`;
         });

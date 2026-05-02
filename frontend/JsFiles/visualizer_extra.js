@@ -86,7 +86,7 @@ function exportPNG() {
     link.click();
 
     const status = document.getElementById("statusText");
-    if (status) status.textContent = "Graph exported as PNG ✅";
+    if (status) status.textContent = "Graph exported as PNG Success";
 }
 
 /* ================= COPY JSON ================= */
@@ -108,7 +108,7 @@ function copyJSON() {
 
     navigator.clipboard.writeText(graphJSON).then(() => {
         const status = document.getElementById("statusText");
-        if (status) status.textContent = "Graph JSON copied to clipboard ✅";
+        if (status) status.textContent = "Graph JSON copied to clipboard Success";
     }).catch(() => {
         const area = document.getElementById("codeArea");
         if (area) area.textContent = graphJSON;
@@ -135,7 +135,7 @@ function shareURL() {
 
     navigator.clipboard.writeText(url).then(() => {
         const status = document.getElementById("statusText");
-        if (status) status.textContent = "Share URL copied to clipboard ✅";
+        if (status) status.textContent = "Share URL copied to clipboard Success";
     }).catch(() => {
         const area = document.getElementById("codeArea");
         if (area) area.textContent = "Share URL:\n" + url;
@@ -174,7 +174,7 @@ function copyAdjList() {
 
     navigator.clipboard.writeText(text).then(() => {
         const status = document.getElementById("statusText");
-        if (status) status.textContent = "Adjacency list copied ✅";
+        if (status) status.textContent = "Adjacency list copied Success";
     }).catch(() => {});
 
     const area = document.getElementById("codeArea");

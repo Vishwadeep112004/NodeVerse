@@ -241,7 +241,7 @@ ${currentProblem.sample_output.trim()}`;
     // ==============================
     // Submit Hidden Tests
     // ==============================
-    document.getElementById('submitBtn').addEventListener('click', async () => {
+    document.getElementById('submitBtn').addEventListener('click', async (event) => {
         event.preventDefault();
         if (!currentProblem) {
             consoleOutput.textContent = "Problem not loaded.";
@@ -330,9 +330,7 @@ ${actualOutput}`;
             consoleStatus.className = 'console-status status-ac';
 
             consoleOutput.textContent =
-                `Accepted ✅
-
-All hidden test cases passed successfully.`;
+                `Accepted \nAll hidden test cases passed successfully.`;
 
             const userId = localStorage.getItem('nodeverse_user_id');
 

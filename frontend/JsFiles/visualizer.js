@@ -145,7 +145,7 @@ const StepController = {
     _updatePlayBtn(isPlaying) {
         const btn = document.getElementById("playBtn");
         if (!btn) return;
-        btn.textContent = isPlaying ? "⏸ Pause" : "▶ Play";
+        btn.textContent = isPlaying ? "Pause" : "Play";
         btn.classList.toggle("playing", isPlaying);
     },
 

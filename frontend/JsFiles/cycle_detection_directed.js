@@ -17,13 +17,13 @@ function setMethod(val){
 function run(adjList, start){
 
     const visited = Array(nodes).fill(false);
-    const recStack = Array(nodes).fill(false); // 🔥 IMPORTANT
+    const recStack = Array(nodes).fill(false); //  IMPORTANT
 
-    // 🔹 DFS CYCLE DETECTION (DIRECTED)
+    //  DFS CYCLE DETECTION (DIRECTED)
     function dfs(u){
 
         visited[u] = true;
-        recStack[u] = true; // 🔥 mark in recursion stack
+        recStack[u] = true; //  mark in recursion stack
 
         steps.push({t:"active", u});
         steps.push({t:"visit", u});
@@ -35,30 +35,30 @@ function run(adjList, start){
 
                 if(dfs(v)) return true;
             }
-            else if(recStack[v]){ // 🔥 cycle condition
+            else if(recStack[v]){ //  cycle condition
                 steps.push({t:"cycle", u, v});
                 return true;
             }
         }
 
-        recStack[u] = false; // 🔥 remove from stack
+        recStack[u] = false; //  remove from stack
         return false;
     }
 
-    // ⚠️ BFS not valid for directed cycle detection (kept for UI)
+    // Warning️ BFS not valid for directed cycle detection (kept for UI)
     function bfs(){
         alert("BFS cycle detection is not supported for directed graphs. Use DFS.");
         return false;
     }
 
-    // 🔹 Start from given node
+    //  Start from given node
     if(useDFS){
         if(dfs(start)) return;
     } else {
         if(bfs(start)) return;
     }
 
-    // 🔹 Handle disconnected graph
+    //  Handle disconnected graph
     for(let i=0;i<nodes;i++){
         if(!visited[i]){
             if(useDFS){
@@ -95,7 +95,7 @@ function play(){
 
 function applyStep(s){
 
-    // 🔥 SAFETY CHECK (fix your crash)
+    //  SAFETY CHECK (fix your crash)
     if(!nodeBodies || !nodeBodies[s.u]) return;
 
     if(s.t==="active"){
@@ -161,7 +161,7 @@ function runCycleDetection(){
 
     let adjList = Array.from({length:nodes}, ()=>[]);
 
-    // 🔥 DIRECTED GRAPH (IMPORTANT CHANGE)
+    //  DIRECTED GRAPH (IMPORTANT CHANGE)
     ed.forEach(edge=>{
         const [u,v] = edge;
         adjList[u].push(v); // only one direction

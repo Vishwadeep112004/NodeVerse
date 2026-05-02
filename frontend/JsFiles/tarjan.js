@@ -78,7 +78,7 @@ function run(adjList) {
 function applyStep(s) {
 
     if (s.t === "result") {
-        let text = `✅ Found ${s.numSCC} SCC(s) via Tarjan's.
+        let text = `Success Found ${s.numSCC} SCC(s) via Tarjan's.
 
 Color = SCC group`;
         document.getElementById("codeArea").textContent = text;

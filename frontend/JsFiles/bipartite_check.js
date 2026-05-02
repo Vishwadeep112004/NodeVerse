@@ -60,8 +60,8 @@ function applyStep(s) {
 
 if (s.t === "result") {
     document.getElementById("codeArea").textContent = s.bipartite
-        ? "✅ Graph IS Bipartite!\n(Can be 2-colored with no conflict)"
-        : "❌ Graph is NOT Bipartite!\n(Odd-length cycle detected)";
+        ? "Success Graph IS Bipartite!\n(Can be 2-colored with no conflict)"
+        : "Error Graph is NOT Bipartite!\n(Odd-length cycle detected)";
     return;
 }
 

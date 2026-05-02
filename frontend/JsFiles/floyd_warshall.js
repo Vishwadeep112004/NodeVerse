@@ -74,10 +74,10 @@ function applyStep(s) {
     if (s.t === "result") {
         if (s.negCycle) {
             document.getElementById("codeArea").textContent =
-                "⚠️ Negative Cycle Detected!
+                "Warning️ Negative Cycle Detected!
 (dist[i][i] < 0)";
         } else {
-            showMatrix(s.dist, "✅ Final All-Pairs Shortest Paths:");
+            showMatrix(s.dist, "Success Final All-Pairs Shortest Paths:");
         }
         // Color all nodes green = done
         nodeBodies.forEach(n => { n.render.fillStyle = "#22c55e"; });

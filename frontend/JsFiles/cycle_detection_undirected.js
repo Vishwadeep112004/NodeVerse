@@ -18,7 +18,7 @@ function run(adjList, start){
 
     const visited = Array(nodes).fill(false);
 
-    // 🔹 DFS CYCLE DETECTION
+    //  DFS CYCLE DETECTION
     function dfs(u, parent){
 
         visited[u] = true;
@@ -34,7 +34,7 @@ function run(adjList, start){
                 if(dfs(v, u)) return true;
             }
             else if(v !== parent){
-                // 🔥 cycle detected
+                //  cycle detected
                 steps.push({t:"cycle", u, v});
                 return true;
             }
@@ -43,7 +43,7 @@ function run(adjList, start){
         return false;
     }
 
-    // 🔹 BFS CYCLE DETECTION
+    //  BFS CYCLE DETECTION
     function bfs(s){
 
         const queue = [];
@@ -66,7 +66,7 @@ function run(adjList, start){
                     steps.push({t:"edge", u, v});
                 }
                 else if(v !== parent){
-                    // 🔥 cycle detected
+                    //  cycle detected
                     steps.push({t:"cycle", u, v});
                     return true;
                 }
@@ -76,14 +76,14 @@ function run(adjList, start){
         return false;
     }
 
-    // 🔹 Start from given node
+    //  Start from given node
     if(useDFS){
         if(dfs(start, -1)) return;
     } else {
         if(bfs(start)) return;
     }
 
-    // 🔹 Handle disconnected graph
+    //  Handle disconnected graph
     for(let i=0;i<nodes;i++){
         if(!visited[i]){
             if(useDFS){

@@ -77,14 +77,14 @@ function applyStep(s) {
 
     if (s.t === "result") {
         document.getElementById("codeArea").textContent =
-            "✅ Topological Order:
+            "Success Topological Order:
 " + s.order.join(" → ");
         return;
     }
 
     if (s.t === "cycle_detected") {
         document.getElementById("codeArea").textContent =
-            "❌ Cycle Detected!
+            "Error Cycle Detected!
 Topological Sort not possible on cyclic graph.";
         return;
     }

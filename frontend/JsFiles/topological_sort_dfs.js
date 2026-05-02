@@ -43,7 +43,7 @@ function applyStep(s) {
 
     if (s.t === "result") {
         document.getElementById("codeArea").textContent =
-            "✅ Topological Order (DFS):
+            "Success Topological Order (DFS):
 " + s.order.join(" → ");
         return;
     }

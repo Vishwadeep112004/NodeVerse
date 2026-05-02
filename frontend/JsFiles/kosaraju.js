@@ -45,7 +45,7 @@ function run(adjList, radjList) {
         if (!visited[i]) dfs1(i);
     }
 
-    steps.push({ t: "log", msg: `✅ Pass 1 complete.
+    steps.push({ t: "log", msg: `Success Pass 1 complete.
 Finish order: [${finishStack.join(", ")}]
 
 ⏳ Pass 2: DFS on reversed graph...` });
@@ -101,7 +101,7 @@ function applyStep(s) {
     }
 
     if (s.t === "result") {
-        let text = `✅ Found ${s.numSCC} Strongly Connected Component(s).
+        let text = `Success Found ${s.numSCC} Strongly Connected Component(s).
 
 `;
         text += "Color legend:\n";

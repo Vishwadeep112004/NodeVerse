@@ -13,7 +13,7 @@
     <!-- NAV -->
     <nav>
         <h2><a href="./Home.html">NodeVerse</a></h2>
-        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <button class="menu-toggle" id="menu-toggle">Menu</button>
         <ul id="nav-links">
             <li><a href="./Home.html">Home</a></li>
             <li><a href="./Algorithms.html">Algorithms</a></li>
@@ -44,15 +44,15 @@
                     <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
                     <button id="directedBtn"   class="type-btn"        onclick="setType(true)">Directed</button>
                 </div>
-                <button onclick="showGraph()">🔧 Build Graph</button>
-                <button onclick="runTopoDFS()">⚡ Run Algorithm</button>
+                <button onclick="showGraph()">Tools Build Graph</button>
+                <button onclick="runTopoDFS()"> Run Algorithm</button>
             </div>
 
             <!-- STEP CONTROLS -->
             <div class="step-controls">
-                <button class="step-btn" onclick="StepController.prevStep()" title="Prev Step (←)">◀</button>
-                <button class="step-btn play-btn" id="playBtn" onclick="StepController.togglePlay()" title="Play/Pause (Space)">▶ Play</button>
-                <button class="step-btn" onclick="StepController.nextStep()" title="Next Step (→)">▶</button>
+                <button class="step-btn" onclick="StepController.prevStep()" title="Prev Step (←)">Prev</button>
+                <button class="step-btn play-btn" id="playBtn" onclick="StepController.togglePlay()" title="Play/Pause (Space)">Play</button>
+                <button class="step-btn" onclick="StepController.nextStep()" title="Next Step (→)">Next</button>
                 <button class="step-btn" onclick="StepController.reset()" title="Reset">↺</button>
                 <span id="stepLabel">Step 0 / 0</span>
             </div>
@@ -87,9 +87,9 @@
 
                 <h3>Color Legend</h3>
                 <ul>
-                    <li>🟡 Yellow — currently exploring (DFS active)</li>
-                    <li>🔵 Blue  — backtracking from this node</li>
-                    <li>🟣 Purple — pushed onto result stack (finalized)</li>
+                    <li> Yellow — currently exploring (DFS active)</li>
+                    <li> Blue  — backtracking from this node</li>
+                    <li> Purple — pushed onto result stack (finalized)</li>
                 </ul>
 
                 <h3>DFS vs Kahn's Algorithm</h3>

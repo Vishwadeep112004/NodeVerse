@@ -68,7 +68,7 @@ function applyStep(s) {
 
     if (s.t === "result") {
         document.getElementById("codeArea").textContent =
-            `✅ MST Complete!
+            `Success MST Complete!
 Total Weight: ${s.totalWeight}
 
 (Green nodes + active edges = MST)`;
