@@ -1,207 +1,224 @@
-let nodes, ed;
-console.log("Cycle Detection JS Loaded");
+/* =====================================================
+   cycle_detection_undirected.js — Cycle Detection (Undirected Graph)
+   Uses StepController from visualizer.js
+   ===================================================== */
 
-let useDFS = true;
+console.log("Cycle Detection (Undirected) JS Loaded");
+
+let cdMethod = "dfs"; // "dfs" or "bfs"
 
 /* ================= METHOD TOGGLE ================= */
 
-function setMethod(val){
-    useDFS = val;
-
-    document.getElementById("DFS")?.classList.toggle("active", val);
-    document.getElementById("BFS")?.classList.toggle("active", !val);
+function setMethod(val) {
+    cdMethod = val;
+    document.getElementById("DFS")?.classList.toggle("active",  val === "dfs");
+    document.getElementById("BFS")?.classList.toggle("active",  val === "bfs");
 }
 
-/* ================= MAIN RUN ================= */
+/* ================= STEP GENERATOR ================= */
 
-function run(adjList, start){
+function buildCycleSteps(nNodes, adjList, start) {
+    const visited = Array(nNodes).fill(false);
+    steps = [];
 
-    const visited = Array(nodes).fill(false);
-
-    //  DFS CYCLE DETECTION
-    function dfs(u, parent){
-
+    // --- DFS-based cycle detection ---
+    function dfs(u, parent) {
         visited[u] = true;
+        steps.push({ t: "active", u });
+        steps.push({ t: "visit",  u });
 
-        steps.push({t:"active", u});
-        steps.push({t:"visit", u});
-
-        for(const v of adjList[u]){
-
-            if(!visited[v]){
-                steps.push({t:"edge", u, v});
-
-                if(dfs(v, u)) return true;
-            }
-            else if(v !== parent){
-                //  cycle detected
-                steps.push({t:"cycle", u, v});
+        for (const { node: v } of adjList[u]) {
+            if (!visited[v]) {
+                steps.push({ t: "edge", u, v });
+                if (dfs(v, u)) return true;
+            } else if (v !== parent) {
+                steps.push({ t: "cycle", u, v });
                 return true;
             }
         }
-
         return false;
     }
 
-    //  BFS CYCLE DETECTION
-    function bfs(s){
+    // --- BFS-based cycle detection ---
+    function bfs(s) {
+        const queue = [{ node: s, parent: -1 }];
+        visited[s]  = true;
 
-        const queue = [];
-        queue.push({node:s, parent:-1});
-        visited[s] = true;
+        while (queue.length) {
+            const { node: u, parent } = queue.shift();
+            steps.push({ t: "active", u });
+            steps.push({ t: "visit",  u });
 
-        while(queue.length){
-
-            const {node:u, parent} = queue.shift();
-
-            steps.push({t:"active", u});
-            steps.push({t:"visit", u});
-
-            for(const v of adjList[u]){
-
-                if(!visited[v]){
+            for (const { node: v } of adjList[u]) {
+                if (!visited[v]) {
                     visited[v] = true;
-                    queue.push({node:v, parent:u});
-
-                    steps.push({t:"edge", u, v});
-                }
-                else if(v !== parent){
-                    //  cycle detected
-                    steps.push({t:"cycle", u, v});
+                    queue.push({ node: v, parent: u });
+                    steps.push({ t: "edge", u, v });
+                } else if (v !== parent) {
+                    steps.push({ t: "cycle", u, v });
                     return true;
                 }
             }
         }
-
         return false;
     }
 
-    //  Start from given node
-    if(useDFS){
-        if(dfs(start, -1)) return;
-    } else {
-        if(bfs(start)) return;
-    }
+    const detect = cdMethod === "bfs" ? bfs : (s) => dfs(s, -1);
 
-    //  Handle disconnected graph
-    for(let i=0;i<nodes;i++){
-        if(!visited[i]){
-            if(useDFS){
-                if(dfs(i,-1)) break;
-            } else {
-                if(bfs(i)) break;
+    if (!detect(start)) {
+        for (let i = 0; i < nNodes; i++) {
+            if (!visited[i]) {
+                if (detect(i)) break;
             }
         }
     }
-}
 
-/* ================= ANIMATION ================= */
-
-function play(){
-    if(isRunning) return;
-    isRunning = true;
-
-    let i=0;
-    const delay = 600;
-
-    function next(){
-        if(i>=steps.length){
-                        return;
-        }
-
-        applyStep(steps[i++]);
-        setTimeout(next, delay);
-    }
-
-    next();
+    steps.push({ t: "done" });
 }
 
 /* ================= APPLY STEP ================= */
 
-function applyStep(s){
+function applyStep(s) {
+    if (!nodeBodies) return;
 
-    if(s.t==="active"){
-        nodeBodies[s.u].render.fillStyle = "#facc15"; // yellow
+    if (s.t === "active") {
+        if (nodeBodies[s.u]) nodeBodies[s.u].render.fillStyle = "#facc15"; // yellow
     }
 
-    if(s.t==="visit"){
-        nodeBodies[s.u].render.fillStyle = "#22c55e"; // green
+    if (s.t === "visit") {
+        if (nodeBodies[s.u]) nodeBodies[s.u].render.fillStyle = "#22c55e"; // green
     }
 
-    if(s.t==="edge"){
-        edgeList.forEach(e=>{
-            if(
-                (e.u===s.u && e.v===s.v) ||
-                (e.u===s.v && e.v===s.u)
-            ){
+    if (s.t === "edge") {
+        edgeList.forEach(e => {
+            if (
+                (e.u === s.u && e.v === s.v) ||
+                (e.u === s.v && e.v === s.u)
+            ) {
                 e.active = true;
             }
         });
     }
 
-    if(s.t==="cycle"){
-        edgeList.forEach(e=>{
-            if(
-                (e.u===s.u && e.v===s.v) ||
-                (e.u===s.v && e.v===s.u)
-            ){
+    if (s.t === "cycle") {
+        edgeList.forEach(e => {
+            if (
+                (e.u === s.u && e.v === s.v) ||
+                (e.u === s.v && e.v === s.u)
+            ) {
                 e.active = true;
-                e.cycle = true;
+                e.cycle  = true;
             }
         });
+        if (nodeBodies[s.u]) nodeBodies[s.u].render.fillStyle = "#ef4444"; // red
+        if (nodeBodies[s.v]) nodeBodies[s.v].render.fillStyle = "#ef4444"; // red
 
-        nodeBodies[s.u].render.fillStyle = "#ef4444";
-        nodeBodies[s.v].render.fillStyle = "#ef4444";
+        const codeArea = document.getElementById("codeArea");
+        if (codeArea) codeArea.textContent = `Cycle detected! Back edge: ${s.u} — ${s.v}`;
+    }
+
+    if (s.t === "done") {
+        const hasCycle = nodeBodies.some(n => n.render.fillStyle === "#ef4444");
+        const codeArea = document.getElementById("codeArea");
+        if (codeArea && !hasCycle) {
+            codeArea.textContent = "No cycle detected in this undirected graph.";
+        }
     }
 }
 
-/* ================= RESET ================= */
+/* ================= MAIN RUN FUNCTION ================= */
 
-function resetGraph(){
-    nodeBodies.forEach(node=>{
-        node.render.fillStyle = "#020617";
-    });
+function runCycleDetection() {
+    const nNodes = Number(document.getElementById("n").value);
+    const start  = Number(document.getElementById("start")?.value ?? 0);
 
-    edgeList.forEach(edge=>{
-        edge.active = false;
-        edge.cycle = false;
-    });
-}
-
-/* ================= BUTTON ================= */
-
-function runCycleDetection(){
-
-    nodes = Number(document.getElementById("n").value);
-    const start = Number(document.getElementById("start").value);
-
-    if(isNaN(start) || start < 0 || start >= nodes){
+    if (!graphCreated || nNodes <= 0) {
+        alert("Build the graph first using 'Build Graph'");
+        return;
+    }
+    if (isNaN(start) || start < 0 || start >= nNodes) {
         alert("Invalid start node");
         return;
     }
 
-    resetGraph();
+    // Reset visual state
+    nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
+    edgeList.forEach(e   => { e.active = false; e.cycle = false; });
 
-    ed = document.getElementById("edges")
-        .value.split(",")
-        .map(edge => edge.trim().split("-").map(Number));
+    const codeArea = document.getElementById("codeArea");
+    if (codeArea) codeArea.textContent = "";
 
-    let adjList = Array.from({length:nodes}, ()=>[]);
-
-    ed.forEach(edge=>{
-        const [u,v] = edge;
-        adjList[u].push(v);
-        adjList[v].push(u); 
-    });
-
-    steps = [];
-
-    run(adjList, start);
+    buildCycleSteps(nNodes, adj, start);
     StepController.load(steps);
 
-    if (document.getElementById('statusText'))
-
-        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+    const statusEl = document.getElementById("statusText");
+    if (statusEl) statusEl.textContent = `${steps.length} steps generated`;
 
     StepController.play();
+}
+
+/* ================= CODE DISPLAY ================= */
+
+function showCode(lang) {
+    const codeArea = document.getElementById("codeArea");
+    let code = "";
+
+    if (lang === "cpp") {
+        code = `#include <bits/stdc++.h>
+using namespace std;
+
+bool dfs(int u, int par, vector<vector<int>>& adj,
+         vector<bool>& vis) {
+    vis[u] = true;
+    for (int v : adj[u]) {
+        if (!vis[v]) {
+            if (dfs(v, u, adj, vis)) return true;
+        } else if (v != par) return true;
+    }
+    return false;
+}
+
+bool hasCycle(int n, vector<vector<int>>& adj) {
+    vector<bool> vis(n, false);
+    for (int i=0;i<n;i++)
+        if (!vis[i] && dfs(i, -1, adj, vis)) return true;
+    return false;
+}`;
+    } else if (lang === "java") {
+        code = `import java.util.*;
+
+class CycleUndirected {
+    static boolean dfs(int u, int par,
+                       List<List<Integer>> adj, boolean[] vis) {
+        vis[u] = true;
+        for (int v : adj.get(u)) {
+            if (!vis[v]) { if (dfs(v,u,adj,vis)) return true; }
+            else if (v != par) return true;
+        }
+        return false;
+    }
+    static boolean hasCycle(int n, List<List<Integer>> adj) {
+        boolean[] vis = new boolean[n];
+        for (int i=0;i<n;i++)
+            if (!vis[i] && dfs(i,-1,adj,vis)) return true;
+        return false;
+    }
+}`;
+    } else if (lang === "python") {
+        code = `def has_cycle_undirected(adj, n):
+    visited = [False] * n
+
+    def dfs(u, parent):
+        visited[u] = True
+        for v in adj[u]:
+            if not visited[v]:
+                if dfs(v, u): return True
+            elif v != parent:
+                return True
+        return False
+
+    return any(not visited[i] and dfs(i, -1) for i in range(n))`;
+    }
+
+    if (codeArea) codeArea.textContent = code;
 }

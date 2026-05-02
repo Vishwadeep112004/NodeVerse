@@ -1,17 +1,21 @@
-let nodes, ed;
+/* =====================================================
+   bellman_ford.js — Bellman-Ford Shortest Path
+   Uses StepController from visualizer.js
+   ===================================================== */
+
 console.log("Bellman-Ford JS Loaded");
 
 let nodeDistLabels = [];
 
-/* ================= DISTANCE LABELS (same pattern as dijkstra.js) ================= */
+/* ================= DISTANCE LABELS OVERLAY ================= */
 
 Events.on(render, "afterRender", () => {
     if (nodeDistLabels.length === 0) return;
 
     const ctx = render.context;
-    ctx.font = "bold 11px Courier New";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+    ctx.font          = "bold 11px JetBrains Mono, Courier New";
+    ctx.textAlign     = "center";
+    ctx.textBaseline  = "middle";
 
     nodeBodies.forEach((b, i) => {
         const d = nodeDistLabels[i];
@@ -19,9 +23,22 @@ Events.on(render, "afterRender", () => {
 
         const label = d === Infinity ? "∞" : d;
 
+        // Background pill
         ctx.fillStyle = "rgba(2,6,23,0.85)";
         ctx.beginPath();
-        ctx.roundRect(b.position.x - 14, b.position.y + 25, 28, 16, 4);
+        // Use arc-based rounded rect for compatibility
+        const rx = b.position.x - 14, ry = b.position.y + 25;
+        const rw = 28, rh = 16, rr = 4;
+        ctx.moveTo(rx + rr, ry);
+        ctx.lineTo(rx + rw - rr, ry);
+        ctx.arcTo(rx + rw, ry, rx + rw, ry + rr, rr);
+        ctx.lineTo(rx + rw, ry + rh - rr);
+        ctx.arcTo(rx + rw, ry + rh, rx + rw - rr, ry + rh, rr);
+        ctx.lineTo(rx + rr, ry + rh);
+        ctx.arcTo(rx, ry + rh, rx, ry + rh - rr, rr);
+        ctx.lineTo(rx, ry + rr);
+        ctx.arcTo(rx, ry, rx + rr, ry, rr);
+        ctx.closePath();
         ctx.fill();
 
         ctx.fillStyle = "#facc15";
@@ -31,19 +48,18 @@ Events.on(render, "afterRender", () => {
 
 /* ================= MAIN RUN ================= */
 
-function run(edgesRaw, weightArr, start) {
-
+function buildBFSteps(edgesRaw, weightArr, nNodes, start) {
     const INF  = Infinity;
-    const dist = Array(nodes).fill(INF);
+    const dist = Array(nNodes).fill(INF);
     dist[start] = 0;
     nodeDistLabels = [...dist];
+    steps = [];
 
-    steps.push({ t: "init", dist: [...dist] });
+    steps.push({ t: "init",   dist: [...dist] });
     steps.push({ t: "active", u: start });
 
     // V-1 relaxation rounds
-    for (let round = 0; round < nodes - 1; round++) {
-
+    for (let round = 0; round < nNodes - 1; round++) {
         let anyUpdate = false;
 
         edgesRaw.forEach(([u, v], idx) => {
@@ -58,7 +74,7 @@ function run(edgesRaw, weightArr, start) {
                 anyUpdate = true;
             }
 
-            // Handle undirected
+            // Handle undirected: relax reverse edge too
             if (!isDirected) {
                 steps.push({ t: "relax_try", u: v, v: u });
                 if (dist[v] !== INF && dist[v] + w < dist[u]) {
@@ -70,10 +86,10 @@ function run(edgesRaw, weightArr, start) {
             }
         });
 
-        if (!anyUpdate) break; // Early exit
+        if (!anyUpdate) break; // Early exit optimization
     }
 
-    // Check for negative cycles
+    // Check for negative cycles (V-th pass)
     let hasNegCycle = false;
     edgesRaw.forEach(([u, v], idx) => {
         const w = weightArr[idx] ?? 1;
@@ -86,32 +102,26 @@ function run(edgesRaw, weightArr, start) {
     steps.push({ t: "result", dist: [...dist], negCycle: hasNegCycle });
 }
 
-/* ================= ANIMATION ================= */
-
-/* play() removed — StepController handles playback */
-
 /* ================= APPLY STEP ================= */
 
 function applyStep(s) {
-
     if (s.t === "init") {
         nodeDistLabels = s.dist.map(d => d);
         return;
     }
 
     if (s.t === "result") {
+        const codeArea = document.getElementById("codeArea");
+        if (!codeArea) return;
         if (s.negCycle) {
-            document.getElementById("codeArea").textContent =
-                "Warning️ Negative Cycle Detected!
-Shortest paths undefined.";
+            codeArea.textContent =
+                "⚠ Negative Cycle Detected!\nShortest paths are undefined.";
         } else {
-            let text = "Success Shortest Distances (Bellman-Ford):
-";
+            let text = "✓ Shortest Distances (Bellman-Ford):\n";
             s.dist.forEach((d, i) => {
-                text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}
-`;
+                text += `  Node ${i}: ${d === Infinity ? "∞ (unreachable)" : d}\n`;
             });
-            document.getElementById("codeArea").textContent = text;
+            codeArea.textContent = text;
         }
         return;
     }
@@ -119,7 +129,7 @@ Shortest paths undefined.";
     if (!nodeBodies || !nodeBodies[s.u]) return;
 
     if (s.t === "active") {
-        nodeBodies[s.u].render.fillStyle = "#facc15"; // yellow
+        nodeBodies[s.u].render.fillStyle = "#facc15"; // yellow — source
     }
 
     if (s.t === "relax_try") {
@@ -140,48 +150,52 @@ Shortest paths undefined.";
         edgeList.forEach(e => {
             if (e.u === s.u && e.v === s.v) { e.active = true; e.cycle = true; }
         });
-        nodeBodies[s.u].render.fillStyle = "#ef4444";
+        if (nodeBodies[s.u]) nodeBodies[s.u].render.fillStyle = "#ef4444";
         if (nodeBodies[s.v]) nodeBodies[s.v].render.fillStyle = "#ef4444";
     }
 }
 
 /* ================= RESET ================= */
 
-function resetGraph() {
+function resetBFGraph() {
     nodeBodies.forEach(n => { n.render.fillStyle = "#020617"; });
-    edgeList.forEach(e => { e.active = false; e.cycle = false; });
+    edgeList.forEach(e   => { e.active = false; e.cycle = false; });
     nodeDistLabels = [];
-        document.getElementById("codeArea").textContent = "";
+    const codeArea = document.getElementById("codeArea");
+    if (codeArea) codeArea.textContent = "";
 }
 
-/* ================= BUTTON ================= */
+/* ================= MAIN RUN BUTTON ================= */
 
 function runBellmanFord() {
+    const nNodes = Number(document.getElementById("n").value);
+    const start  = Number(document.getElementById("start").value);
 
-    nodes = Number(document.getElementById("n").value);
-    const start = Number(document.getElementById("start").value);
+    if (!graphCreated || nNodes <= 0) {
+        alert("Build the graph first using 'Build Graph'");
+        return;
+    }
+    if (isNaN(start) || start < 0 || start >= nNodes) {
+        alert("Invalid start node");
+        return;
+    }
 
-    if (isNaN(nodes) || nodes <= 0) { alert("Enter valid number of nodes"); return; }
-    if (isNaN(start) || start < 0 || start >= nodes) { alert("Invalid start node"); return; }
-
-    const edgeInput  = document.getElementById("edges").value.trim();
+    const edgeInput   = document.getElementById("edges").value.trim();
     const weightInput = document.getElementById("weights").value.trim();
 
     if (!edgeInput)   { alert("Enter edges"); return; }
     if (!weightInput) { alert("Enter weights (supports negative values!)"); return; }
 
-    resetGraph();
+    resetBFGraph();
 
     const edgesRaw  = edgeInput.split(",").map(e => e.trim().split("-").map(Number));
     const weightArr = weightInput.split(",").map(Number);
 
-    steps = [];
-    run(edgesRaw, weightArr, start);
+    buildBFSteps(edgesRaw, weightArr, nNodes, start);
     StepController.load(steps);
 
-    if (document.getElementById('statusText'))
-
-        document.getElementById('statusText').textContent = steps.length + ' steps generated';
+    const statusEl = document.getElementById("statusText");
+    if (statusEl) statusEl.textContent = `${steps.length} steps generated`;
 
     StepController.play();
 }
@@ -251,12 +265,12 @@ class BellmanFord {
 
     for _ in range(n - 1):
         for u, v, w in edges:
-            if dist[u] != float('inf') and \
+            if dist[u] != float('inf') and \\
                dist[u] + w < dist[v]:
                 dist[v] = dist[u] + w
 
     for u, v, w in edges:
-        if dist[u] != float('inf') and \
+        if dist[u] != float('inf') and \\
            dist[u] + w < dist[v]:
             print("Negative cycle!")
             return None
@@ -264,5 +278,5 @@ class BellmanFord {
     return dist`;
     }
 
-    codeArea.textContent = code;
+    if (codeArea) codeArea.textContent = code;
 }
