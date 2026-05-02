@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign In — NodeVerse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CssFiles/auth.css">
+<style>
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveGrid 30s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+@keyframes moveGrid {
+    from { background-position: 0 0; }
+    to   { background-position: 40px 40px; }
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <ul id="nav-links">
+        <li><a href="./Home.html">Home</a></li>
+        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./signup.html">Sign Up</a></li>
+        <li><a href="./Practice.html">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Welcome <span class="accent-word">Back</span></h2>
+            <p>Log in to access your dashboard</p>
+        </div>
+        
+        <form id="signinForm">
+            <div class="form-group">
+                <label for="identifier">Username or Email</label>
+                <input type="text" id="identifier" name="identifier" placeholder="johndoe123" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            
+            <div class="error-msg" id="errorMsg"></div>
+            
+            <button type="submit" class="btn btn-primary" id="signinBtn">
+                <span>Login</span>
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            Don't have an account? <a href="./signup.html">Sign Up</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <span class="footer-brand">NodeVerse</span>
+        <span class="footer-sep">·</span>
+        <span>Graph Algorithm Visualizer</span>
+    </div>
+</footer>
+
+<script src="../JsFiles/signin.js"></script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NodeVerse — Graph Algorithm Visualizer</title>
+<meta name="description" content="NodeVerse is an interactive graph algorithm visualizer. Explore BFS, DFS, Dijkstra, Kosaraju, Kruskal, and 15+ algorithms with step-by-step animations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CssFiles/home.css">
+</head>
+
+<body>
+
+<!-- ANIMATED GRAPH CANVAS BACKGROUND -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- NAV -->
+<nav id="mainNav">
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+    <ul id="nav-links">
+        <li><a href="./Home.html" class="active-nav">Home</a></li>
+        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./Visualizer.html">Visualizer</a></li>
+        <li><a href="./Practice.html">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-inner">
+        <div class="hero-tag">
+            <span class="tag-dot"></span>
+            Interactive Learning Platform
+        </div>
+        <h1 class="hero-title">
+            Graph Algorithms<br>
+            <span class="accent-word">Visualized</span>
+        </h1>
+        <p class="hero-sub">
+            Explore 15+ graph algorithms through interactive, step-by-step
+            animations. From BFS to Kosaraju — understand every traversal, 
+            every edge, every decision.
+        </p>
+        <div class="hero-cta">
+            <a href="./Algorithms.html" class="btn btn-primary" id="launch-btn">
+                <span>⚡ Launch Visualizer</span>
+            </a>
+            <a href="./Visualizer.html" class="btn btn-outline" id="builder-btn">
+                <span>🔧 Graph Builder</span>
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-num" data-target="15">0</span>
+                <span class="stat-label">Algorithms</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="6">0</span>
+                <span class="stat-label">Categories</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="3">0</span>
+                <span class="stat-label">Code Languages</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-num" data-target="100">0</span>
+                <span class="stat-label">% Interactive</span>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-hint" id="scrollHint">
+        <span>Explore</span>
+        <div class="scroll-arrow">↓</div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="section-header">
+        <span class="section-tag">Core Features</span>
+        <h2>Everything You Need to <span class="accent-word">Master Graphs</span></h2>
+        <p>Built for students, competitive programmers, and anyone who learns by doing.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card" id="feat-visualize">
+            <div class="feat-icon">🕸️</div>
+            <h3>Visualize</h3>
+            <p>Watch algorithms execute step-by-step on interactive, physics-based graphs. Drag nodes, change speed, replay any step.</p>
+            <div class="feat-tags">
+                <span>Step Control</span>
+                <span>Physics Engine</span>
+                <span>Color Coding</span>
+            </div>
+        </div>
+        <div class="feature-card featured" id="feat-learn">
+            <div class="feat-glow-ring"></div>
+            <div class="feat-icon">🧠</div>
+            <h3>Learn</h3>
+            <p>Every algorithm page explains the theory, complexity, properties, and real-world applications — with code in C++, Java, Python.</p>
+            <div class="feat-tags">
+                <span>Theory</span>
+                <span>Complexity</span>
+                <span>3 Languages</span>
+            </div>
+        </div>
+        <div class="feature-card" id="feat-build">
+            <div class="feat-icon">🔧</div>
+            <h3>Build</h3>
+            <p>Use the Graph Builder to construct custom graphs from scratch — input nodes, edges, weights, and visualize any algorithm instantly.</p>
+            <div class="feat-tags">
+                <span>Custom Graphs</span>
+                <span>Weighted</span>
+                <span>Directed/Undirected</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ALGORITHM CATEGORIES -->
+<section class="algo-section" id="algorithms">
+    <div class="section-header">
+        <span class="section-tag">Algorithm Library</span>
+        <h2>All <span class="accent-word">15 Algorithms</span> Covered</h2>
+        <p>Organized by category — from basic traversal to advanced SCC detection.</p>
+    </div>
+    <div class="algo-grid">
+
+        <div class="algo-group" data-color="#00ff88">
+            <div class="group-header">
+                <span class="group-icon">🔍</span>
+                <h3>Basic Traversal</h3>
+                <span class="group-badge beginner">Beginner</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./bfs.html'">
+                    <span class="algo-name">Breadth First Search</span>
+                    <span class="algo-short">BFS</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./dfs.html'">
+                    <span class="algo-name">Depth First Search</span>
+                    <span class="algo-short">DFS</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./connected_components.html'">
+                    <span class="algo-name">Connected Components</span>
+                    <span class="algo-short">CC</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="algo-group" data-color="#facc15">
+            <div class="group-header">
+                <span class="group-icon">🔄</span>
+                <h3>Cycle Detection</h3>
+                <span class="group-badge intermediate">Intermediate</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./cycle_detection_undirected.html'">
+                    <span class="algo-name">Cycle Detection (Undirected)</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./cycle_detection_directed.html'">
+                    <span class="algo-name">Cycle Detection (Directed)</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./bipartite_check.html'">
+                    <span class="algo-name">Bipartite Graph Check</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="algo-group" data-color="#00d4ff">
+            <div class="group-header">
+                <span class="group-icon">📐</span>
+                <h3>Topological Sort</h3>
+                <span class="group-badge intermediate">Intermediate</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./topological_sort_dfs.html'">
+                    <span class="algo-name">Topological Sort (DFS)</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./topological_sort_kahn.html'">
+                    <span class="algo-name">Topological Sort (Kahn's)</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="algo-group" data-color="#a855f7">
+            <div class="group-header">
+                <span class="group-icon">🌀</span>
+                <h3>Strongly Connected</h3>
+                <span class="group-badge advanced">Advanced</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./kosaraju.html'">
+                    <span class="algo-name">Kosaraju's Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./tarjan.html'">
+                    <span class="algo-name">Tarjan's Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="algo-group" data-color="#f97316">
+            <div class="group-header">
+                <span class="group-icon">🗺️</span>
+                <h3>Shortest Path</h3>
+                <span class="group-badge advanced">Advanced</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./dijkstra.html'">
+                    <span class="algo-name">Dijkstra's Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./bellman_ford.html'">
+                    <span class="algo-name">Bellman-Ford Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./floyd_warshall.html'">
+                    <span class="algo-name">Floyd-Warshall Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="algo-group" data-color="#ec4899">
+            <div class="group-header">
+                <span class="group-icon">🌲</span>
+                <h3>Minimum Spanning Tree</h3>
+                <span class="group-badge advanced">Advanced</span>
+            </div>
+            <ul class="algo-list">
+                <li onclick="location.href='./prim.html'">
+                    <span class="algo-name">Prim's Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+                <li onclick="location.href='./kruskal.html'">
+                    <span class="algo-name">Kruskal's Algorithm</span>
+                    <span class="go-arrow">→</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <span class="footer-brand">NodeVerse</span>
+        <span class="footer-sep">·</span>
+        <span>Graph Algorithm Visualizer</span>
+        <span class="footer-sep">·</span>
+        <span>Built by Vishu &amp; Team © 2026</span>
+    </div>
+</footer>
+
+<script src="../JsFiles/home.js"></script>
+</body>
+</html>

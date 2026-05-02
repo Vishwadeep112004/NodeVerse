@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up — NodeVerse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CssFiles/auth.css">
+<style>
+/* Animated background grid for auth pages */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: moveGrid 30s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+@keyframes moveGrid {
+    from { background-position: 0 0; }
+    to   { background-position: 40px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <ul id="nav-links">
+        <li><a href="./Home.html">Home</a></li>
+        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./signin.html">Sign In</a></li>
+        <li><a href="./Practice.html">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Join <span class="accent-word">NodeVerse</span></h2>
+            <p>Create an account to track your progress</p>
+        </div>
+        
+        <form id="signupForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" id="name" name="name" placeholder="John" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Last Name</label>
+                    <input type="text" id="surname" name="surname" placeholder="Doe" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="johndoe123" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+            </div>
+            
+            <div class="error-msg" id="errorMsg"></div>
+            
+            <button type="submit" class="btn btn-primary" id="signupBtn">
+                <span>Register</span>
+            </button>
+        </form>
+        
+        <div class="auth-footer">
+            Already have an account? <a href="./signin.html">Sign In</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <span class="footer-brand">NodeVerse</span>
+        <span class="footer-sep">·</span>
+        <span>Graph Algorithm Visualizer</span>
+    </div>
+</footer>
+
+<script src="../JsFiles/signup.js"></script>
+</body>
+</html>

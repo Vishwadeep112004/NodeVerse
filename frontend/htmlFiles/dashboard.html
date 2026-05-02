@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — NodeVerse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../CssFiles/auth.css">
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 136, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 30s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes moveGrid {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 40px 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="mainNav">
+        <h2><a href="./Home.html">NodeVerse</a></h2>
+        <ul id="nav-links">
+            <li><a href="./Home.html">Home</a></li>
+            <li><a href="./Algorithms.html">Algorithms</a></li>
+            <li><a href="./Visualizer.html">Visualizer</a></li>
+            <li><a href="./Practice.html">Practice</a></li>
+            <li><a href="./dashboard.html" class="active-nav">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="dashboard-container" id="dashboardContent" style="display: none;">
+
+            <!-- Header Card -->
+            <div class="dash-header-card">
+                <div class="profile-info">
+                    <div class="profile-avatar" id="avatarInitials">U</div>
+                    <div class="profile-details">
+                        <h2 id="fullName">Loading...</h2>
+                        <p class="username">@<span id="userName">username</span></p>
+                        <p id="userEmail">user@email.com</p>
+                    </div>
+                </div>
+                <div class="dash-actions">
+                    <button class="btn btn-outline" onclick="location.href='./Algorithms.html'">Solve More</button>
+                    <button class="btn btn-danger" id="logoutBtnMain">Logout</button>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <!-- Updated Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3 id="statSolved">0</h3>
+                    <p>Problems Solved</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="statRank">Bronze</h3>
+                    <p>Current Rank</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3 id="statRecent">0</h3>
+                    <p>Recent Submissions</p>
+                </div>
+
+                <!-- New Today's Submission Card -->
+                <div class="stat-card">
+                    <h3 id="statToday">0</h3>
+                    <p>Today's Submissions</p>
+                </div>
+            </div>
+
+            <!-- Graph Section -->
+            <div class="dash-chart-card">
+                <h3 class="chart-title">Submission Activity</h3>
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="loadingIndicator"
+            style="text-align: center; color: var(--accent); font-family: 'Orbitron', monospace; font-size: 1.5rem; letter-spacing: 2px; animation: pulse 1.5s infinite;">
+            LOADING PROFILE...
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <span class="footer-brand">NodeVerse</span>
+            <span class="footer-sep">·</span>
+            <span>Graph Algorithm Visualizer</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../JsFiles/dashboard.js"></script>
+    <style>
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .dash-chart-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</body>
+
+</html>

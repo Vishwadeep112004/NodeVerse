@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NodeVerse — Practice</title>
+<meta name="description" content="Practice all 15 graph algorithms in NodeVerse. Test your skills across different categories and difficulties.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../CssFiles/algorithms.css">
+<style>
+/* Custom styling to differentiate from Algorithms page */
+.page-header-inner {
+    border-bottom: 2px solid var(--accent);
+}
+.algo-card {
+    border-left: 2px solid var(--border2);
+}
+.algo-card:hover {
+    border-left-color: var(--accent);
+}
+.practice-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    padding: 6px 12px;
+    border-radius: 4px;
+    margin-right: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+    <ul id="nav-links">
+        <li><a href="./Home.html">Home</a></li>
+        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./Visualizer.html">Visualizer</a></li>
+        <li><a href="./Practice.html" class="active-nav">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+    </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+    <div class="page-header-inner">
+        <span class="page-tag" style="color:var(--accent2); background:rgba(0,212,255,0.1); border-color:rgba(0,212,255,0.3);">Challenge Mode</span>
+        <h1>Practice Algorithms</h1>
+        <p>Test your knowledge on 15 algorithms. Implement and solve to increase your rank!</p>
+    </div>
+</header>
+
+<!-- CATEGORY GRID -->
+<main class="categories">
+
+    <!-- BASIC TRAVERSAL -->
+    <section class="category" id="cat-traversal">
+        <div class="cat-header" data-color="#00ff88">
+            <div class="cat-title-row">
+                <span class="cat-icon">🔍</span>
+                <h2 class="cat-title">Basic Traversal</h2>
+                <span class="diff-badge beginner">Beginner</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">BFS</div>
+                    <div class="card-info">
+                        <div class="card-name">Breadth First Search</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=1'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">DFS</div>
+                    <div class="card-info">
+                        <div class="card-name">Depth First Search</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=2'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00ff88">CC</div>
+                    <div class="card-info">
+                        <div class="card-name">Connected Components</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=3'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CYCLE DETECTION -->
+    <section class="category" id="cat-cycle">
+        <div class="cat-header" data-color="#facc15">
+            <div class="cat-title-row">
+                <span class="cat-icon">🔄</span>
+                <h2 class="cat-title">Cycle Detection</h2>
+                <span class="diff-badge intermediate">Intermediate</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">CU</div>
+                    <div class="card-info">
+                        <div class="card-name">Cycle Detection (Undirected)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=4'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">CD</div>
+                    <div class="card-info">
+                        <div class="card-name">Cycle Detection (Directed)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=5'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#facc15">BP</div>
+                    <div class="card-info">
+                        <div class="card-name">Bipartite Graph Check</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=6'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOPOLOGICAL SORT -->
+    <section class="category" id="cat-topo">
+        <div class="cat-header" data-color="#00d4ff">
+            <div class="cat-title-row">
+                <span class="cat-icon">📐</span>
+                <h2 class="cat-title">Topological Sort</h2>
+                <span class="diff-badge intermediate">Intermediate</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00d4ff">TS</div>
+                    <div class="card-info">
+                        <div class="card-name">Topological Sort (DFS)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=7'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#00d4ff">KN</div>
+                    <div class="card-info">
+                        <div class="card-name">Topological Sort (Kahn's)</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=8'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCC -->
+    <section class="category" id="cat-scc">
+        <div class="cat-header" data-color="#a855f7">
+            <div class="cat-title-row">
+                <span class="cat-icon">🌀</span>
+                <h2 class="cat-title">Strongly Connected Components</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#a855f7">KS</div>
+                    <div class="card-info">
+                        <div class="card-name">Kosaraju's Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=9'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#a855f7">TJ</div>
+                    <div class="card-info">
+                        <div class="card-name">Tarjan's Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=10'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHORTEST PATH -->
+    <section class="category" id="cat-shortest">
+        <div class="cat-header" data-color="#f97316">
+            <div class="cat-title-row">
+                <span class="cat-icon">🗺️</span>
+                <h2 class="cat-title">Shortest Path</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">DJ</div>
+                    <div class="card-info">
+                        <div class="card-name">Dijkstra's Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=11'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">BF</div>
+                    <div class="card-info">
+                        <div class="card-name">Bellman-Ford Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=12'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#f97316">FW</div>
+                    <div class="card-info">
+                        <div class="card-name">Floyd-Warshall Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=3'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MST -->
+    <section class="category" id="cat-mst">
+        <div class="cat-header" data-color="#ec4899">
+            <div class="cat-title-row">
+                <span class="cat-icon">🌲</span>
+                <h2 class="cat-title">Minimum Spanning Tree</h2>
+                <span class="diff-badge advanced">Advanced</span>
+            </div>
+        </div>
+        <div class="algo-cards">
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#ec4899">PR</div>
+                    <div class="card-info">
+                        <div class="card-name">Prim's Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=14'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+
+            <div class="algo-card">
+                <div class="card-left">
+                    <div class="card-abbr" style="color:#ec4899">KR</div>
+                    <div class="card-info">
+                        <div class="card-name">Kruskal's Algorithm</div>
+                    </div>
+                </div>
+                <div class="card-right">
+                    <span class="practice-btn" onclick="location.href='./ide.html?id=15'" style="cursor: pointer;">Solve</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <span class="footer-brand">NodeVerse</span>
+        <span class="footer-sep">·</span>
+        <span>Graph Algorithm Practice</span>
+        <span class="footer-sep">·</span>
+        <span>Built by Vishu &amp; Team © 2026</span>
+    </div>
+</footer>
+
+<script src="../JsFiles/algorithms.js"></script>
+</body>
+</html>

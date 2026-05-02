@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeVerse — Graph Visualizer</title>
+    <meta name="description" content="Interactive graph builder — construct custom graphs, toggle directed/undirected, add weights, and run any algorithm.">
+    <link rel="stylesheet" href="../CssFiles/shared.css">
+    <link rel="stylesheet" href="../CssFiles/visualizer.css">
+</head>
+
+<body class="algo-page">
+
+    <!-- NAV -->
+    <nav>
+        <h2><a href="./Home.html">NodeVerse</a></h2>
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <ul id="nav-links">
+            <li><a href="./Home.html">Home</a></li>
+            <li><a href="./Algorithms.html">Algorithms</a></li>
+            <li><a href="./Visualizer.html" class="active-nav">Visualizer</a></li>
+        <li><a href="./Practice.html">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- LEFT PANEL -->
+        <div class="left-panel">
+
+            <h2>Graph Visualizer</h2>
+
+            <div class="status-badge">
+                <span class="dot"></span>
+                <span id="statusText">Ready</span>
+            </div>
+
+            <!-- BUILD CONTROLS -->
+            <div class="controls">
+                <input id="n"      type="number" placeholder="Number of Nodes (e.g. 6)" min="1" max="20">
+                <input id="edges"  type="text"   placeholder="Edges: 0-1,1-2,2-0">
+                <input id="weights" type="text"  placeholder="Weights (optional, comma-sep)">
+                <div class="graph-type">
+                    <button id="undirectedBtn" class="type-btn active" onclick="setType(false)">Undirected</button>
+                    <button id="directedBtn"   class="type-btn"        onclick="setType(true)">Directed</button>
+                </div>
+                <button id="showGraphBtn" onclick="showGraph()">🔧 Build Graph</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- PRESET TEMPLATES -->
+            <div class="preset-section">
+                <div class="preset-label">Quick Presets</div>
+                <div class="preset-grid">
+                    <button class="preset-btn" onclick="loadPreset('path')"    title="Simple path: 0→1→2→3→4">Path</button>
+                    <button class="preset-btn" onclick="loadPreset('cycle')"   title="Cycle: 0-1-2-3-4-0">Cycle</button>
+                    <button class="preset-btn" onclick="loadPreset('tree')"    title="Binary tree structure">Tree</button>
+                    <button class="preset-btn" onclick="loadPreset('complete')" title="Complete graph K5">K5</button>
+                    <button class="preset-btn" onclick="loadPreset('dag')"     title="Directed Acyclic Graph">DAG</button>
+                    <button class="preset-btn" onclick="loadPreset('random')"  title="Random graph">Random</button>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- EXPORT/SHARE -->
+            <div class="export-section">
+                <div class="preset-label">Export / Share</div>
+                <div class="preset-grid">
+                    <button class="preset-btn" onclick="exportPNG()"   title="Save as PNG image">PNG</button>
+                    <button class="preset-btn" onclick="copyJSON()"    title="Copy graph as JSON">JSON</button>
+                    <button class="preset-btn" onclick="shareURL()"    title="Copy shareable URL">URL</button>
+                    <button class="preset-btn" onclick="copyAdjList()" title="Copy adjacency list">Adj List</button>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- INFO -->
+            <div class="info">
+                <h3>What is a Graph?</h3>
+                <p>A graph is a set of vertices (nodes) and edges (connections between nodes). Used to model real-world networks.</p>
+
+                <h3>Basic Terminology</h3>
+                <ul>
+                    <li><strong>Vertex / Node:</strong> Fundamental unit of a graph</li>
+                    <li><strong>Edge:</strong> Connection between two vertices</li>
+                    <li><strong>Weighted Graph:</strong> Edges have cost / distance values</li>
+                    <li><strong>Directed Graph:</strong> Edges have direction (→)</li>
+                    <li><strong>Degree:</strong> Number of edges on a vertex</li>
+                    <li><strong>Cycle:</strong> Path starting and ending at same vertex</li>
+                </ul>
+
+                <h3>Graph Types</h3>
+                <ul>
+                    <li>Directed & Undirected</li>
+                    <li>Weighted & Unweighted</li>
+                    <li>Connected & Disconnected</li>
+                    <li>Cyclic & Acyclic (DAG)</li>
+                    <li>Complete Graph</li>
+                    <li>Tree (special graph)</li>
+                </ul>
+
+                <h3>Representations</h3>
+                <ul>
+                    <li><strong>Adjacency Matrix:</strong> 2D grid</li>
+                    <li><strong>Adjacency List:</strong> List of neighbors per node</li>
+                    <li><strong>Edge List:</strong> List of all edges</li>
+                </ul>
+
+                <h3>Real-World Applications</h3>
+                <ul>
+                    <li>🌐 Social networks</li>
+                    <li>🗺️ GPS & shortest path</li>
+                    <li>📡 Network routing</li>
+                    <li>📦 Dependency graphs</li>
+                    <li>🕸️ Web crawling</li>
+                    <li>🧬 Biological networks</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- OUTPUT AREA -->
+            <div class="areaForCode" id="codeArea" style="min-height:80px"></div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="right-panel">
+            <canvas id="world"></canvas>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="../JsFiles/visualizer.js"></script>
+    <script src="../JsFiles/visualizer_extra.js"></script>
+    <script>
+        document.getElementById("menu-toggle").addEventListener("click", () => {
+            document.getElementById("nav-links").classList.toggle("active");
+        });
+
+        // Load from URL hash on page load
+        window.addEventListener("load", () => {
+            const hash = window.location.hash;
+            if (hash.includes("n=")) {
+                try {
+                    const params = new URLSearchParams(hash.replace("#", ""));
+                    const nVal = params.get("n");
+                    const eVal = params.get("edges");
+                    const wVal = params.get("weights") || "";
+                    const dir  = params.get("directed") === "1";
+                    if (nVal && eVal) {
+                        document.getElementById("n").value = nVal;
+                        document.getElementById("edges").value = eVal;
+                        document.getElementById("weights").value = wVal;
+                        setType(dir);
+                        showGraph();
+                        document.getElementById("statusText").textContent = "Graph loaded from URL";
+                    }
+                } catch(e) { /* ignore */ }
+            }
+        });
+    </script>
+</body>
+</html>

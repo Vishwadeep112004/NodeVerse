@@ -1,0 +1,254 @@
+/* =====================================================
+   NodeVerse — ide.css
+   ===================================================== */
+
+/* Layout */
+body.ide-page {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.ide-container {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 65px); /* nav height */
+    background: var(--bg);
+}
+
+/* ================= LEFT PANEL ================= */
+.ide-left {
+    width: 40%;
+    min-width: 300px;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Glowing divider */
+.ide-left::after {
+    content: '';
+    position: absolute;
+    top: 0; right: -1px;
+    width: 1px; height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    opacity: 0.4;
+}
+
+.problem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border2);
+    padding-bottom: 12px;
+}
+
+.problem-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: var(--glow);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.diff-badge {
+    font-size: 0.65rem;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.diff-badge.beginner { background: rgba(0,255,136,0.12); color: #00ff88; border: 1px solid rgba(0,255,136,0.25); }
+.diff-badge.intermediate { background: rgba(250,204,21,0.12); color: #facc15; border: 1px solid rgba(250,204,21,0.25); }
+.diff-badge.advanced { background: rgba(249,115,22,0.12); color: #f97316; border: 1px solid rgba(249,115,22,0.25); }
+
+.problem-body {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text2);
+}
+
+.problem-body h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-top: 24px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.problem-body p {
+    margin-bottom: 16px;
+}
+
+.problem-body ul {
+    margin-left: 20px;
+    margin-bottom: 16px;
+}
+
+/* Sample I/O blocks */
+.io-block {
+    background: #060e1f;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    color: var(--text);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+.io-label {
+    font-size: 0.7rem;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ================= RIGHT PANEL ================= */
+.ide-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+}
+
+/* IDE Toolbar */
+.ide-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--card2);
+    border-bottom: 1px solid var(--border2);
+}
+
+.lang-select {
+    padding: 8px 12px;
+    background: #060e1f;
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    transition: all 0.25s;
+    cursor: pointer;
+}
+.lang-select:focus, .lang-select:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(0,255,136,0.2);
+}
+
+.ide-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Editor Wrapper */
+.editor-wrapper {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+}
+
+/* CodeMirror Overrides for NodeVerse Theme */
+.CodeMirror {
+    height: 100% !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.85rem !important;
+    background: var(--bg) !important;
+    color: var(--text) !important;
+}
+.CodeMirror-gutters {
+    background: var(--card2) !important;
+    border-right: 1px solid var(--border2) !important;
+}
+.CodeMirror-linenumber {
+    color: var(--text2) !important;
+}
+.CodeMirror-cursor {
+    border-left: 2px solid var(--accent) !important;
+}
+.cm-s-monokai span.cm-keyword { color: var(--accent) !important; }
+.cm-s-monokai span.cm-def { color: var(--accent2) !important; }
+
+/* Console Panel */
+.console-panel {
+    height: 30%;
+    min-height: 200px;
+    background: #060e1f;
+    border-top: 1px solid var(--border2);
+    display: flex;
+    flex-direction: column;
+}
+
+.console-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 20px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border2);
+}
+
+.console-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.console-status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.status-idle { color: var(--text2); }
+.status-running { color: var(--accent2); text-shadow: 0 0 8px var(--accent2); animation: pulse 1s infinite; }
+.status-ac { color: #00ff88; text-shadow: 0 0 8px rgba(0,255,136,0.5); background: rgba(0,255,136,0.1); border: 1px solid #00ff88;}
+.status-wa { color: #f97316; text-shadow: 0 0 8px rgba(249,115,22,0.5); background: rgba(249,115,22,0.1); border: 1px solid #f97316;}
+
+.console-output {
+    flex: 1;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text);
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .ide-container {
+        flex-direction: column;
+    }
+    .ide-left {
+        width: 100%;
+        height: 40%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .ide-right {
+        height: 60%;
+    }
+}

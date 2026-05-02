@@ -1,0 +1,107 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #0d1117;
+    color: #00ff99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.otp-container {
+    width: 400px;
+    background: #161b22;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 153, 0.25);
+    text-align: center;
+    border: 1px solid #00ff99;
+}
+
+h1 {
+    margin-bottom: 15px;
+    color: #00ff99;
+    text-shadow: 0 0 8px #00ff99;
+}
+
+p {
+    color: #c9d1d9;
+    margin-bottom: 25px;
+    font-size: 15px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #00ff99;
+    border-radius: 8px;
+    background: #0d1117;
+    color: #00ff99;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input:focus {
+    box-shadow: 0 0 10px #00ff99;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #00ff99;
+    color: #0d1117;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background: #00cc77;
+    box-shadow: 0 0 12px #00ff99;
+}
+
+.resend-btn {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #00ff99;
+    color: #00ff99;
+}
+
+.resend-btn:hover {
+    background: rgba(0, 255, 153, 0.1);
+}
+
+.error-msg {
+    color: #ff4d4d;
+    margin-bottom: 15px;
+    display: none;
+    font-size: 14px;
+}
+
+.success-msg {
+    color: #00ff99;
+    margin-bottom: 15px;
+    display: none;
+    font-size: 14px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

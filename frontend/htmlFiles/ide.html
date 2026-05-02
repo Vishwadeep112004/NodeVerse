@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NodeVerse — IDE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Shared styling and specific IDE styling -->
+<link rel="stylesheet" href="../CssFiles/shared.css">
+<link rel="stylesheet" href="../CssFiles/ide.css">
+
+<!-- CodeMirror CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/monokai.min.css">
+</head>
+
+<body class="ide-page">
+
+<!-- NAV -->
+<nav id="mainNav">
+    <h2><a href="./Home.html">NodeVerse</a></h2>
+    <ul id="nav-links">
+        <li><a href="./Home.html">Home</a></li>
+        <li><a href="./Algorithms.html">Algorithms</a></li>
+        <li><a href="./Visualizer.html">Visualizer</a></li>
+        <li><a href="./Practice.html">Practice</a></li>
+        <li><a href="./dashboard.html">Dashboard</a></li>
+    </ul>
+</nav>
+
+<div class="ide-container">
+
+    <!-- LEFT PANEL (Problem Details) -->
+    <div class="ide-left">
+        <div class="problem-header">
+            <h1 class="problem-title" id="probTitle">Loading...</h1>
+            <span class="diff-badge" id="probDiff">...</span>
+        </div>
+        
+        <div class="problem-body">
+            <div id="probStatement">
+                <p>Loading problem description...</p>
+            </div>
+            
+            <h3>Constraints</h3>
+            <ul id="probConstraints">
+                <li>Loading constraints...</li>
+            </ul>
+
+            <h3>Sample Input</h3>
+            <div class="io-block" id="probSampleIn">Loading...</div>
+
+            <h3>Sample Output</h3>
+            <div class="io-block" id="probSampleOut">Loading...</div>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL (Workspace) -->
+    <div class="ide-right">
+        
+        <!-- Toolbar -->
+        <div class="ide-toolbar">
+            <select class="lang-select" id="langSelect">
+                <option value="cpp">C++ (GCC 9.2.0)</option>
+                <option value="java">Java (OpenJDK 13)</option>
+                <option value="python" selected>Python (3.8.1)</option>
+            </select>
+            
+            <div class="ide-actions">
+                <button class="btn-primary" style="background:transparent; color:var(--text); border-color:var(--border2);" id="runBtn">
+                    <span>▶ Run Code</span>
+                </button>
+                <button class="btn-primary" id="submitBtn">
+                    <span>☁ Submit Code</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="editor-wrapper">
+            <textarea id="codeEditor"></textarea>
+        </div>
+
+        <!-- Output Console -->
+        <div class="console-panel">
+            <div class="console-header">
+                <span class="console-title">Console</span>
+                <span class="console-status status-idle" id="consoleStatus">Ready</span>
+            </div>
+            <div class="console-output" id="consoleOutput">
+Welcome to NodeVerse IDE.
+Write your code above, then click 'Run Code' to test against sample input, or 'Submit Code' to evaluate.
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CodeMirror JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+
+<!-- IDE Logic -->
+<script src="../JsFiles/ide.js"></script>
+</body>
+</html>
